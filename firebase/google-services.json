@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "158525108899",
+    "firebase_url": "https://lspac-impact.firebaseio.com",
+    "project_id": "lspac-impact",
+    "storage_bucket": "lspac-impact.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158525108899:android:e71c624504a31e093c0516",
+        "android_client_info": {
+          "package_name": "LS.PAC.imPACt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158525108899-s2s4p0hf47ef0gjf0gbfnnsk2vaoe9i4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-jKVR_gQ0_US9Y93gj_ggtxBBh4trARk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158525108899-s2s4p0hf47ef0gjf0gbfnnsk2vaoe9i4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

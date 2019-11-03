@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>158525108899-vcb1tcqi8uibdm431q57m5is8mkro0kb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.158525108899-vcb1tcqi8uibdm431q57m5is8mkro0kb</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-V1cNWXW1cKLbXLt-J0lv-xwjqAiDNhQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>158525108899</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>LS.PAC.imPACt</string>
+	<key>PROJECT_ID</key>
+	<string>lspac-impact</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lspac-impact.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:158525108899:ios:5494bea8083836123c0516</string>
+	<key>DATABASE_URL</key>
+	<string>https://lspac-impact.firebaseio.com</string>
+</dict>
+</plist>
