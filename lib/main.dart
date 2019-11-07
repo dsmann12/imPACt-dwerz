@@ -23,6 +23,57 @@ class MyStatefulWidget extends StatefulWidget
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
+Widget displayHomeContent()
+{
+  return Scaffold(
+    body: Center(
+      child: Card(
+        child: Image.asset(
+          'assets/rubber_duck.jpg',
+          fit: BoxFit.cover,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 5,
+        margin: EdgeInsets.all(10),
+      ),
+    ),
+  );
+}
+
+Widget buildCoverImage(Size screenSize)
+{
+  return Container(
+    height: screenSize.height / 2.6,
+    decoration: BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/rubber_duck.jpg'),
+      fit: BoxFit.cover,
+      ),
+    ),
+  );
+}
+
+
+Widget displayMentorList() {
+  return Scaffold(
+      body: Center(
+          child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const ListTile(
+                    leading: Icon(Icons.contact_mail),
+                    title: Text('Nash Mahmoud'),
+                    subtitle: Text('CSC 4330 Instructor'),
+                  )
+                ],
+              )
+          )
+      )
+  );
+}
+
 
 //Main page widget state (displays the content of each tab)
 class _MyStatefulWidgetState extends State<MyStatefulWidget>
@@ -31,14 +82,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   static const TextStyle optionStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Mentors',
-      style: optionStyle,
-    ),
+    displayHomeContent(), //widget function call
+    displayMentorList(), // widget function call
     Text(
       'Your Personal Profile',
       style: optionStyle,
