@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to cloud firestore in Firebase
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';   // for DateFormat class
 
 
 void main() => runApp(MyApp());
@@ -26,21 +28,135 @@ class MyStatefulWidget extends StatefulWidget
 
 Widget displayHomeContent()
 {
-  return Scaffold(
-    body: Center(
-      child: Card(
-        child: Image.asset(
-          'assets/rubber_duck.jpg',
-          fit: BoxFit.cover,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 5,
-        margin: EdgeInsets.all(10),
-      ),
-    ),
+  return MyHomePage();
+  // return Scaffold(
+  //   body: Center(
+  //     child: Card(
+  //       child: Image.asset(
+  //         'assets/rubber_duck.jpg',
+  //         fit: BoxFit.cover,
+  //       ),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10.0),
+  //       ),
+  //       elevation: 5,
+  //       margin: EdgeInsets.all(10),
+  //     ),
+  //   ),
+  // );
+}
+
+class MyHomePage extends StatefulWidget {
+ @override
+ _MyHomePageState createState() {
+   return _MyHomePageState();
+ }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+ @override
+ Widget build(BuildContext context) {
+   return Scaffold(
+     appBar: AppBar(title: Text('Posts')),
+     body: _buildBody(context),
+   );
+ }
+
+//  Widget _buildBody(BuildContext context) {
+  //  // TODO: get actual snapshot from Cloud Firestore
+  //  return _buildList(context, dummySnapshot);
+  Widget _buildBody(BuildContext context) {
+   return StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection('post').orderBy('date', descending: true).snapshots(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) return LinearProgressIndicator();
+
+      return _buildList(context, snapshot.data.documents);
+    },
   );
+  }
+ }
+
+//  Widget _buildList(BuildContext context, List<Map> snapshot) {
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+   return ListView(
+     padding: const EdgeInsets.only(top: 20.0),
+     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+   );
+ }
+
+//  Widget _buildListItem(BuildContext context, Map data) {
+//    final record = Record.fromMap(data);
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+  //  final record = Record.fromSnapshot(data);
+   final post = Post.fromSnapshot(data);
+   final format = DateFormat("MMMd");
+   return Padding(
+    //  key: ValueKey(record.name),
+     key: ValueKey(post.user),
+     padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 1.0),
+     child: Card(
+       child: Column(
+         mainAxisSize: MainAxisSize.min,
+         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+         children: <Widget>[
+           ListTile(
+             leading: Icon(Icons.account_circle),
+             title: Text(post.user),
+             trailing: Text(format.format(DateTime.fromMillisecondsSinceEpoch(post.date.seconds * 1000))),
+           ),
+           Container(
+             padding: EdgeInsets.only(left: 14.0, right: 14.0, bottom: 8.0),
+             child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(post.body),
+            )
+           )
+         ],
+       )
+     )
+   );
+  //  return Padding(
+  //   //  key: ValueKey(record.name),
+  //    key: ValueKey(post.user),
+  //    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  //    child: Container(
+  //      decoration: BoxDecoration(
+  //        border: Border.all(color: Colors.grey),
+  //        borderRadius: BorderRadius.circular(5.0),
+  //      ),
+  //      child: ListTile(
+  //       //  title: Text(record.name),
+  //       //  trailing: Text(record.votes.toString()),
+  //       //  onTap: () => print(record),
+  //       title: Text(post.user),
+  //       // trailing: Text(post.date.toString()),
+  //       onTap: () => print(post)
+  //      ),
+  //    ),
+  //  );
+ }
+
+
+class Post {
+  final String body;
+  final Timestamp date;
+  final String user;
+  final DocumentReference reference;
+
+  Post.fromMap(Map<String, dynamic> map, {this.reference})
+    : assert(map['body'] != null),
+      assert(map['date'] != null),
+      assert(map['user'] != null),
+      body = map['body'],
+      date = map['date'],
+      user = map['user'];
+
+  Post.fromSnapshot(DocumentSnapshot snapshot)
+    : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  @override
+  String toString() => "Post<$body:$date:$user";
 }
 
 //Widget buildCoverImage(Size screenSize)
