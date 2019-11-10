@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -73,7 +74,7 @@ Widget displayMentorList() {
       )
   );
 }
-
+//State widget for the personal profile tab
 class PersonalProfile extends StatefulWidget {
   @override
   _PersonalProfileState createState() => new _PersonalProfileState();
@@ -186,6 +187,103 @@ class getClipper extends CustomClipper<Path> {
   }
 }
 
+class SearchBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Search for a mentor"),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {
+            showSearch(context: context, delegate: DataSearch());
+          })
+        ],
+      ),
+      //drawer: Drawer(),
+    );
+  }
+}
+
+class DataSearch extends SearchDelegate<String> {
+
+  final mentors = [
+    "Nash Mahmoud",
+    "Grant Williams",
+    "Golden Richard",
+    "Patti Aymond",
+    "William Duncan",
+    "Feng Chen",
+  ];
+
+  final recentMentors = [
+    "Grant Williams",
+    "Golden Richard",
+    "Patti Aymond",
+    "William Duncan",
+  ];
+
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(icon: Icon(Icons.clear), onPressed: () {
+        query = "";
+        close(context, null);
+      })];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(icon: AnimatedIcon(
+      icon: AnimatedIcons.menu_arrow,
+      progress: transitionAnimation,
+    ),
+    onPressed: (){
+      close(context, null);
+    });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Center(
+      child: Container(
+        height: 400.0,
+        width: 400.0,
+        child: Card(
+          color: Colors.purple,
+          child: Center(
+            child: Text(query),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = query.isEmpty?
+        recentMentors
+        : mentors.where((p) => p.startsWith(query)).toList();
+    
+    return ListView.builder(itemBuilder: (context, index) => ListTile(
+      onTap: (){
+        showResults(context);
+      },
+      leading: Icon(Icons.person),
+      title: RichText(text: TextSpan(
+        text: suggestionList[index].substring(0, query.length),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        children: [TextSpan(
+          text: suggestionList[index].substring(query.length),
+          style: TextStyle(color: Colors.grey))
+        ]),
+      ),
+      ),
+      itemCount: suggestionList.length,
+    );
+  }
+}
+
 
 
 
@@ -199,10 +297,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
     displayHomeContent(), //widget function call
     displayMentorList(), // widget function call
     PersonalProfile(),
-    Text(
-      'Search for Other Potential Mentors here',
-      style: optionStyle,
-    )
+    SearchBar()
+//    Text(
+//      'Search for Mentors here',
+//      style: optionStyle,
+//    )
   ];
   //event on tapping on a tab
   void _onItemTapped(int index)
@@ -229,15 +328,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contact_mail),
-            title: Text('Contacts'),
+            title: Text('List of Mentors'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            title: Text('Profile'),
+            title: Text('Personal Profile'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title: Text('Search for Mentors'),
           ),
         ],
         currentIndex: _selectedIndex,
