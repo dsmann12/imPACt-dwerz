@@ -303,102 +303,227 @@ class getClipper extends CustomClipper<Path> {
   }
 }
 
-class SearchBar extends StatelessWidget {
+List<String> mentors = [
+  "Grant Williams",
+  "Golden Richard",
+  "Patti Aymond",
+  "William Duncan",
+  "Feng Chen",
+  "Qingyang Wang",
+  "Chen Wang",
+];
+
+class Recommendations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Search for a mentor"),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
-          })
-        ],
-      ),
-      //drawer: Drawer(),
+      body: Center(child: DisplayRecommendations()),
     );
   }
 }
 
-class DataSearch extends SearchDelegate<String> {
+class DisplayRecommendations extends StatefulWidget
+{
+  @override
+  State<StatefulWidget> createState() => _DisplayRecommendationsState();
+}
 
-  final mentors = [
-    "Nash Mahmoud",
-    "Grant Williams",
-    "Golden Richard",
-    "Patti Aymond",
-    "William Duncan",
-    "Feng Chen",
-  ];
+class _DisplayRecommendationsState extends State<DisplayRecommendations>
+{
 
-  final recentMentors = [
-    "Grant Williams",
-    "Golden Richard",
-    "Patti Aymond",
-    "William Duncan",
-  ];
-
+  
+  List randomItems = getRandomList();
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(icon: Icon(Icons.clear), onPressed: () {
-        query = "";
-        close(context, null);
-      })];
+  Widget build(BuildContext context)
+  {
+    return Container(
+      child: ListView.builder(
+          itemCount: randomItems.length,
+          itemBuilder: (context, index) {
+            return Dismissible(
+              key: Key(randomItems[index]),
+              background: Container(
+                alignment: AlignmentDirectional.centerEnd,
+                color: Colors.red,
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+              onDismissed: (direction) {
+                setState(() {
+                  randomItems.removeAt(index);
+                });
+              },
+              direction: DismissDirection.endToStart,
+              child: Card(
+                elevation: 5,
+                child: Container(
+                  height: 100.0,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 100.0,
+                        width: 70.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/rubber_duck.jpg')
+                          )
+                        ),
+                      ),
+                      Container(
+                        height: 100,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                randomItems[index],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                                child: Container(
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.teal),
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
+                                  ),
+                                  child: Icon(Icons.person_add),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
+                                child: Container(
+                                  width: 260,
+                                  child: Text("Computer Science Professor at LSU",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 48, 48, 54)
+                                  ),),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
   }
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(icon: AnimatedIcon(
-      icon: AnimatedIcons.menu_arrow,
-      progress: transitionAnimation,
-    ),
-    onPressed: (){
-      close(context, null);
+
+  static List getRandomList()
+  {
+    List<String>_mentorList = mentors;
+    final existing = Set<String>();
+    List list = List.generate(_mentorList.length, (i) {
+      _mentorList.shuffle();
+      return "Mentor Name: ${_mentorList[i]}";
+
     });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 400.0,
-        width: 400.0,
-        child: Card(
-          color: Colors.purple,
-          child: Center(
-            child: Text(query),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty?
-        recentMentors
-        : mentors.where((p) => p.startsWith(query)).toList();
-    
-    return ListView.builder(itemBuilder: (context, index) => ListTile(
-      onTap: (){
-        showResults(context);
-      },
-      leading: Icon(Icons.person),
-      title: RichText(text: TextSpan(
-        text: suggestionList[index].substring(0, query.length),
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        children: [TextSpan(
-          text: suggestionList[index].substring(query.length),
-          style: TextStyle(color: Colors.grey))
-        ]),
-      ),
-      ),
-      itemCount: suggestionList.length,
-    );
+    return list;
   }
 }
+
+//class DataSearch extends SearchDelegate<String> {
+//
+//  final mentors = [
+//    "Nash Mahmoud",
+//    "Grant Williams",
+//    "Golden Richard",
+//    "Patti Aymond",
+//    "William Duncan",
+//    "Feng Chen",
+//  ];
+//
+//  final recentMentors = [
+//    "Grant Williams",
+//    "Golden Richard",
+//    "Patti Aymond",
+//    "William Duncan",
+//  ];
+//
+//  final databaseReference = Firestore.instance;
+//  @override
+//  List<Widget> buildActions(BuildContext context) {
+//    return [
+//      IconButton(icon: Icon(Icons.clear), onPressed: () {
+//        query = "";
+//        close(context, null);
+//      })];
+//  }
+//
+//  @override
+//  Widget buildLeading(BuildContext context) {
+//    return IconButton(icon: AnimatedIcon(
+//      icon: AnimatedIcons.menu_arrow,
+//      progress: transitionAnimation,
+//    ),
+//    onPressed: (){
+//      close(context, null);
+//    });
+//  }
+//
+//  @override
+//  Widget buildResults(BuildContext context) {
+//    return Center(
+//      child: Container(
+//        height: 400.0,
+//        width: 400.0,
+//        child: Card(
+//          color: Colors.purple,
+//          child: Center(
+//            child: Text(query),
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//
+////  void addNewSearchElement() async
+////  {
+////    await databaseReference.collection("Searches")
+////        .document("1")
+////    });
+////
+////  }
+
+
+//  @override
+//  Widget buildSuggestions(BuildContext context) {
+//    final suggestionList = query.isEmpty?
+//        recentMentors
+//        : mentors.where((p) => p.startsWith(query)).toList();
+//
+//    return ListView.builder(itemBuilder: (context, index) => ListTile(
+//      onTap: (){
+//        showResults(context);
+//      },
+//      leading: Icon(Icons.person),
+//      title: RichText(text: TextSpan(
+//        text: suggestionList[index].substring(0, query.length),
+//        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+//        children: [TextSpan(
+//          text: suggestionList[index].substring(query.length),
+//          style: TextStyle(color: Colors.grey))
+//        ]),
+//      ),
+//      ),
+//      itemCount: suggestionList.length,
+//    );
+//  }
+//}
 
 
 
@@ -413,7 +538,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
     displayHomeContent(), //widget function call
     displayMentorList(), // widget function call
     PersonalProfile(),
-    SearchBar()
+    Recommendations()
+//    SearchBar()
 //    Text(
 //      'Search for Mentors here',
 //      style: optionStyle,
@@ -451,8 +577,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             title: Text('Personal Profile'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search for Mentors'),
+            icon: Icon(Icons.all_inclusive),
+            title: Text('Connect'),
           ),
         ],
         currentIndex: _selectedIndex,
