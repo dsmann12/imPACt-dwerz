@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to cloud firestore in Firebase
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';   // for DateFormat class
+import 'package:intl/intl.dart'; // for DateFormat class
+
+
+
 
 
 void main() => runApp(MyApp());
@@ -181,8 +184,8 @@ Widget displayMentorList() {
                 children: <Widget>[
                   const ListTile(
                     leading: Icon(Icons.contact_mail),
-                    title: Text('Nash Mahmoud'),
-                    subtitle: Text('CSC 4330 Instructor'),
+                    title: Text('Anas Nash Mahmoud'),
+                    subtitle: Text('Computer Science Professor at LSU'),
                   )
                 ],
               )
@@ -311,6 +314,22 @@ List<String> mentors = [
   "Feng Chen",
   "Qingyang Wang",
   "Chen Wang",
+  "Gerald Baumgartner",
+  "Konstantin Busch",
+  "Bijaya Karki",
+  "Doris Carver",
+  "Jianhua Chen",
+  "Sukhamay Kundu",
+  "Kisung Lee",
+  "Supratik Mukhopadhyay",
+  "Seung-Jong Park",
+  "Rahul Shah",
+  "Mingxuan Sun",
+  "Evangelos Triantaphyllou",
+  "Jinwei Ye",
+  "Jian Zhang",
+  "Nathan Brener",
+  "Steve Brandt",
 ];
 
 class Recommendations extends StatelessWidget {
@@ -426,7 +445,6 @@ class _DisplayRecommendationsState extends State<DisplayRecommendations>
   static List getRandomList()
   {
     List<String>_mentorList = mentors;
-    final existing = Set<String>();
     List list = List.generate(_mentorList.length, (i) {
       _mentorList.shuffle();
       return "Mentor Name: ${_mentorList[i]}";
