@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to cloud firestore in Firebase
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // for DateFormat class
+import 'package:morpheus/morpheus.dart';
 
 
 
@@ -552,6 +553,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+//  final List<Widget> _screens = [
+//    Scaffold(backgroundColor: Colors.green),
+//    Scaffold(backgroundColor: Colors.red),
+//    Scaffold(backgroundColor: Colors.blue),
+//  ];
+  int _currentIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     displayHomeContent(), //widget function call
     displayMentorList(), // widget function call
@@ -577,18 +584,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
       appBar: AppBar(
         title: const Text('ImPACt Application'),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: MorpheusTabView(
+        child: _widgetOptions[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Post Feed'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contact_mail),
-            title: Text('List of Mentors'),
+            title: Text('Contacts'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
@@ -602,7 +609,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.green[600],
         unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          if(index != _currentIndex) {
+            setState(() => _currentIndex = index);
+            _onItemTapped(index);
+          }
+        }
+        //onTap: _onItemTapped,
       ),
     );
   }

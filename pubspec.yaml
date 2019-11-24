@@ -33,6 +33,7 @@ dependencies:
   # For example, to use Firebase Authentication and Cloud Firestore
   firebase_auth: ^0.14.0+8
   cloud_firestore: ^0.12.10
+  morpheus: ^1.2.2+1
 
 dev_dependencies:
   flutter_test:
