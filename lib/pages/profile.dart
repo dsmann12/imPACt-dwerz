@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class PersonalProfile extends StatefulWidget {
   @override
   _PersonalProfileState createState() => new _PersonalProfileState();
