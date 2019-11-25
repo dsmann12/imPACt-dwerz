@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//State widget for the personal profile tab
 class PersonalProfile extends StatefulWidget {
   @override
   _PersonalProfileState createState() => new _PersonalProfileState();
@@ -27,8 +26,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         decoration: BoxDecoration(
                             color: Colors.red,
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
+                                image: AssetImage(
+                                    'assets/profile_placeholder.png'),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
                             boxShadow: [
@@ -36,7 +35,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                             ])),
                     SizedBox(height: 90.0),
                     Text(
-                      'Tom Cruise',
+                      'Zheng Ye',
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -44,7 +43,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     SizedBox(height: 15.0),
                     Text(
-                      'Subscribe guys',
+                      'LSU Computer Science Undergraduate',
                       style: TextStyle(
                           fontSize: 17.0,
                           fontStyle: FontStyle.italic,
