@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:morpheus/morpheus.dart';
 import 'package:impact/pages/home.dart';
 import 'package:impact/pages/profile.dart';
-import 'package:impact/pages/network.dart';
+import 'package:impact/pages/contacts.dart';
 import 'package:impact/pages/connect.dart';
 
-//Main page widget instantiation
 class RootPage extends StatefulWidget
 {
-  RootPage({Key key}) : super(key: key);
+  RootPage ({Key key}) : super(key: key);
 
-  @override
   _RootPageState createState() => _RootPageState();
 }
 
-//Main page widget state (displays the content of each tab)
 class _RootPageState extends State<RootPage>
 {
   int _selectedIndex = 0;
@@ -55,33 +52,33 @@ class _RootPageState extends State<RootPage>
         child: _widgetOptions[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Post Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail),
-            title: Text('Contacts'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Personal Profile'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.all_inclusive),
-            title: Text('Connect'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green[600],
-        unselectedItemColor: Colors.black,
-        onTap: (index) {
-          if(index != _currentIndex) {
-            setState(() => _currentIndex = index);
-            _onItemTapped(index);
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Post Feed'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contact_mail),
+              title: Text('Contacts'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              title: Text('Personal Profile'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.all_inclusive),
+              title: Text('Connect'),
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.green[600],
+          unselectedItemColor: Colors.black,
+          onTap: (index) {
+            if(index != _currentIndex) {
+              setState(() => _currentIndex = index);
+              _onItemTapped(index);
+            }
           }
-        }
         //onTap: _onItemTapped,
       ),
     );
