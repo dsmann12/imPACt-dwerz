@@ -25,7 +25,7 @@ class _RootPageState extends State<RootPage>
   int _currentIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(), //widget function call
-    displayMentorList(), // widget function call
+    MentorList(), // widget function call
     PersonalProfile(),
     Recommendations()
 //    SearchBar()

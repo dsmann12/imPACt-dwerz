@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:impact/pages/login.dart';
+import 'package:impact/services/authentication.dart';
+import 'routes.dart';
 
 class PersonalProfile extends StatefulWidget {
   @override
@@ -50,6 +53,17 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           fontFamily: 'Montserrat'),
                     ),
                     SizedBox(height: 25.0),
+                    IconButton(
+                      icon: Icon(Icons.power_settings_new),
+                      tooltip: 'Click to logout',
+                      onPressed: () {
+                        AuthService.signOut();
+                        Navigator.of(context).pushReplacement(FadePageRoute(
+                            builder: (context) => LoginScreen()
+                        ));
+                        Text('Logout');
+                      },
+                    ),
 //                    Container(
 //                        height: 30.0,
 //                        width: 95.0,

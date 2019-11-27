@@ -11,7 +11,7 @@ import 'package:impact/services/authentication.dart';
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
 
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
+  //Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
 
   // Future<String> _loginUser(LoginData data) {
   //   // return Future.delayed(loginTime).then((_) {
@@ -43,14 +43,14 @@ class LoginScreen extends StatelessWidget {
   //   });
   // }
 
-  Future<String> _recoverPassword(String name) {
-    return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(name)) {
-        return 'Username not exists';
-      }
-      return null;
-    });
-  }
+//  Future<String> _recoverPassword(String name) {
+//    return Future.delayed(loginTime).then((_) {
+//      if (!mockUsers.containsKey(name)) {
+//        return 'Username not exists';
+//      }
+//      return null;
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
       title: 'imPACt',
       emailValidator: (value) {
         if (!value.contains('@') || (!value.endsWith('.com') && !value.endsWith('.edu'))) {
-          return "Email must contain '@' and end with '.com'";
+          return "Email must contain '@' and end with .edu";
         }
         return null;
       },
@@ -93,12 +93,12 @@ class LoginScreen extends StatelessWidget {
           builder: (context) => RootPage(),
         ));
       },
-      onRecoverPassword: (name) {
-        print('Recover password info');
-        print('Name: $name');
-        return _recoverPassword(name);
-        // Show new password dialog
-      },
+//      onRecoverPassword: (name) {
+//        print('Recover password info');
+//        print('Name: $name');
+//        return _recoverPassword(name);
+//        // Show new password dialog
+//      },
     );
   }
 }
