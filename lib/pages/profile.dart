@@ -48,10 +48,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     Text(
                       'LSU Computer Science Undergraduate',
                       style: TextStyle(
-                          fontSize: 17.0,
+                          fontSize: 15.0,
                           fontStyle: FontStyle.italic,
                           fontFamily: 'Montserrat'),
                     ),
+                    Chip(backgroundColor: Colors.blue, label: Text("Mentee"),),
                     SizedBox(height: 25.0),
                     IconButton(
                       icon: Icon(Icons.power_settings_new),
