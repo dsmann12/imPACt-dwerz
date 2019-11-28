@@ -25,9 +25,11 @@ class _RootPageState extends State<RootPage>
   int _currentIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(), //widget function call
+    MentorList(),
+    Recommendations(),
     MentorList(), // widget function call
     PersonalProfile(),
-    Recommendations()
+    
 //    SearchBar()
 //    Text(
 //      'Search for Mentors here',
@@ -58,21 +60,28 @@ class _RootPageState extends State<RootPage>
               title: Text('Post Feed'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail),
+              icon: Icon(Icons.message),
+              title: Text('Messaging'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.all_inclusive),
+              title: Text('Connect'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contacts),
               title: Text('Contacts'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
               title: Text('Personal Profile'),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.all_inclusive),
-              title: Text('Connect'),
-            ),
           ],
           currentIndex: _selectedIndex,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           selectedItemColor: Colors.green[600],
           unselectedItemColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
           onTap: (index) {
             if(index != _currentIndex) {
               setState(() => _currentIndex = index);
