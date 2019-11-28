@@ -26,7 +26,7 @@ class _MentorListState extends State<MentorList>
 {
   List<ItemModel> prepareData = <ItemModel>[
     ItemModel(header: 'Anas Nash Mahmoud'),
-    ItemModel(header: 'Grant Williams'),
+    ItemModel(header: 'Chen Wang'),
     ItemModel(header: 'Qingyang Wang'),
     ItemModel(header: 'Golden Richard'),
   ];
