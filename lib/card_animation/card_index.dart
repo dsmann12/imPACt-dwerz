@@ -131,31 +131,31 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
           elevation: 0.0,
           backgroundColor: new Color.fromRGBO(106, 94, 175, 1.0),
           centerTitle: true,
-          leading: new Container(
-            margin: const EdgeInsets.all(15.0),
-            child: new Icon(
-              Icons.equalizer,
-              color: Colors.cyan,
-              size: 30.0,
-            ),
-          ),
-          actions: <Widget>[
-            new GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //     context,
-                //     new MaterialPageRoute(
-                //         builder: (context) => new PageMain()));
-              },
-              child: new Container(
-                  margin: const EdgeInsets.all(15.0),
-                  child: new Icon(
-                    Icons.search,
-                    color: Colors.cyan,
-                    size: 30.0,
-                  )),
-            ),
-          ],
+//          leading: new Container(
+//            margin: const EdgeInsets.all(15.0),
+//            child: new Icon(
+//              Icons.equalizer,
+//              color: Colors.cyan,
+//              size: 30.0,
+//            ),
+//          ),
+//          actions: <Widget>[
+//            new GestureDetector(
+//              onTap: () {
+//                // Navigator.push(
+//                //     context,
+//                //     new MaterialPageRoute(
+//                //         builder: (context) => new PageMain()));
+//              },
+//              child: new Container(
+//                  margin: const EdgeInsets.all(15.0),
+//                  child: new Icon(
+//                    Icons.search,
+//                    color: Colors.cyan,
+//                    size: 30.0,
+//                  )),
+//            ),
+//          ],
           title: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

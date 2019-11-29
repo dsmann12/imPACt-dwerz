@@ -3,24 +3,64 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to cloud firestore in Firebase
 
 class User {
-  final String userId;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String major;
-  final String institution;
-  final String college;
-  final String department;
-  final List<String> interests;
-  final Uint8 role;
-  final String avatarURL;
-  final String description;
-  final List<String> mentors;
-  final List<String> mentees;
-  final DocumentReference reference;
+  String id;
+  String firstName;
+  String lastName;
+  String email;
+  String major;
+  String institution;
+  String college;
+  String department;
+  List<String> interests;
+  int role;
+  String avatarURL;
+  String description;
+  List<String> mentors;
+  List<String> mentees;
+  DocumentReference reference;
+
+  User({
+    this.id = "",
+    this.firstName = "",
+    this.lastName = "",
+    this.email = "",
+    this.major = "",
+    this.institution = "",
+    this.college = "",
+    this.department = "",
+    this.role = 0,
+    this.avatarURL = "",
+    this.description = "",
+  }) {
+    this.interests = new List<String>();
+    this.mentors = new List<String>();
+    this.mentees = new List<String>();
+    this.reference = null;
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      "id": this.id,
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "email": this.email,
+      "major": this.major,
+      "institution": this.institution,
+      "college": this.college,
+      "department": this.department,
+      "interests": this.interests,
+      "role": this.role,
+      "avatarURL": this.avatarURL,
+      "description": this.description,
+      "mentors": this.mentors,
+      "mentees": this.mentees,
+    };
+
+    return map;
+  }
 
   User.fromMap(Map<String, dynamic> map, {this.reference})
-    : assert(map['userId'] != null),
+    : assert(map['id'] != null),
       assert(map['firstName'] != null),
       assert(map['lastName'] != null),
       assert(map['email'] != null),
@@ -34,7 +74,7 @@ class User {
       assert(map['description'] != null),
       assert(map['mentors'] != null),
       assert(map['mentees'] != null),
-      userId = map['userId'],
+      id = map['id'],
       firstName = map['firstName'],
       lastName = map['lastName'],
       email = map['email'],
@@ -42,16 +82,20 @@ class User {
       institution = map['institution'],
       college = map['college'],
       department = map['department'],
-      interests = map['interests'],
+      interests = List.from(map['interests']),
       role = map['role'],
       avatarURL = map['avatarURL'],
       description = map['description'],
-      mentors = map['mentors'],
-      mentees = map['mentees'];
+      mentors = List.from(map['mentors']),
+      mentees = List.from(map['mentees']);
 
   User.fromSnapshot(DocumentSnapshot snapshot)
     : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "User<$userId:$firstName:$lastName>";
+  String toString() => "User<$id:$firstName:$lastName>";
+
+  bool isMentor() {
+    return this.role == 1;
+  }
 }
