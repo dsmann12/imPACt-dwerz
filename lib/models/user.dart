@@ -94,4 +94,8 @@ class User {
 
   @override
   String toString() => "User<$id:$firstName:$lastName>";
+
+  bool isMentor() {
+    return this.role == 1;
+  }
 }
