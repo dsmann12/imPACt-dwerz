@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:impact/pages/bubble.dart';
 import 'package:impact/models/message.dart';
 import 'package:impact/models/user.dart';
@@ -11,7 +12,9 @@ class ChatPage extends StatefulWidget {
   ChatPage(User currentUser, Chat chat, {Key key})
     : this.currentUser = currentUser,
       this.chat = chat,
-      super(key: key);
+      super(key: key) {
+        chat.messages = chat.messages.reversed.toList();
+      }
 
   @override
   _ChatPageState createState() => _ChatPageState(currentUser: this.currentUser, chat: this.chat);
@@ -24,6 +27,7 @@ class _ChatPageState extends State<ChatPage> {
   BubbleStyle styleSomebody;
 
   final TextEditingController textEditingController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   _ChatPageState({this.currentUser, this.chat});
 
@@ -34,7 +38,7 @@ class _ChatPageState extends State<ChatPage> {
 
     styleSomebody = BubbleStyle(
       nip: BubbleNip.leftTop,
-      color: Colors.amber[800],
+      color: Colors.amber[900],
       elevation: 1 * px,
       margin: BubbleEdges.only(top: 8.0, right: 50.0),
       alignment: Alignment.topLeft,
@@ -51,11 +55,15 @@ class _ChatPageState extends State<ChatPage> {
     String id = chat.ids.where((val) => val != currentUser.id).toList()[0];
     var otherUser = chat.users[id];
 
-    MessagingService.getChat(chat).then((value) {
-      setState(() {
-        chat = value;
+    if (chat.messages.length != 0) {
+      MessagingService.getChat(chat).then((value) {
+        setState(() {
+          chat = value;
+          chat.messages = chat.messages.reversed.toList();
+        });
       });
-    });
+    }
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -116,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
                     alignment: Alignment.bottomRight,
                     child: IconButton(
                       icon: Icon(Icons.send),
-                      onPressed: () => onSend(textEditingController.text),
+                      onPressed: () async => onSend(textEditingController.text),
                     )
                   )
                 ],
@@ -182,6 +190,8 @@ class _ChatPageState extends State<ChatPage> {
     return ListView(
       padding: EdgeInsets.all(8.0),
       children: chat.messages.map((message) => _buildListItem(message)).toList(),
+      controller: scrollController,
+      reverse: true,
     );
   }
 
@@ -192,7 +202,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void onSend(String text) {
+  Future<void> onSend(String text) async {
     if (text.trim() != "") {
       textEditingController.clear();
     }
@@ -203,10 +213,15 @@ class _ChatPageState extends State<ChatPage> {
       senderLastName: currentUser.lastName,
       body: text);
 
-    chat.messages.add(message);
-    MessagingService.addMessage(message);
+    if (chat.messages.length == 0) {
+      chat = await MessagingService.addChat(chat);
+    }
+    message.chatReference = chat.reference;
+    message = await MessagingService.addMessage(message);
     setState(() {
-      chat = chat;
+      chat.messages.add(message);
+      this.chat = chat;
+      scrollController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     });
   }
 }

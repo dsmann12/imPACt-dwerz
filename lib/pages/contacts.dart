@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:impact/services/authentication.dart';
+import 'package:impact/models/user.dart';
+import 'package:impact/services/messaging_service.dart';
+import 'package:impact/services/user_service.dart';
+import 'package:impact/models/message.dart';
+import 'package:impact/pages/chat.dart';
 
 
 class ItemModel {
   bool isExpanded;
-  String header;
+  User user;
   //BodyModel bodyModel;
 
-  ItemModel({this.isExpanded: false, this.header});
+  ItemModel({this.isExpanded: false, this.user});
 }
 
 //class BodyModel {
@@ -24,12 +30,15 @@ class MentorList extends StatefulWidget
 
 class _MentorListState extends State<MentorList>
 {
-  List<ItemModel> prepareData = <ItemModel>[
-    ItemModel(header: 'Anas Nash Mahmoud'),
-    ItemModel(header: 'Chen Wang'),
-    ItemModel(header: 'Qingyang Wang'),
-    ItemModel(header: 'Golden Richard'),
-  ];
+  // List<ItemModel> prepareData = <ItemModel>[
+  //   ItemModel(header: 'Anas Nash Mahmoud'),
+  //   ItemModel(header: 'Chen Wang'),
+  //   ItemModel(header: 'Qingyang Wang'),
+  //   ItemModel(header: 'Golden Richard'),
+  // ];
+  
+  List<ItemModel> data;
+  final User currentUser = AuthService.getCurrentUser();
 
   showAlertDialog(BuildContext context)
   {
@@ -58,15 +67,37 @@ class _MentorListState extends State<MentorList>
 
   @override
   Widget build(BuildContext context) {
+    UserService.getMentorsByUser(currentUser.id).then((mentorList) {
+      setState(() {
+        List<User> mentors = mentorList;
+        if (data == null) {
+          data = mentors.map((user) => ItemModel(user: user)).toList();
+        } else if (data.length != mentors.length) {
+          for(int i = 0; i < mentors.length; ++i) {
+            if (i < data.length) {
+              data[i].user = mentors[i];
+            } else {
+              data.add(ItemModel(user: mentors[i]));
+            }
+          }
+        } else {
+          for(int i = 0; i < data.length; ++i) {
+            data[i].user = mentors[i];
+          }
+        }
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Mentors'),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: prepareData.length,
+        child: (data == null) ? Center(child: CircularProgressIndicator()) : ListView.builder(
+          itemCount: data?.length,
           itemBuilder: (BuildContext context, int index) {
+            ItemModel item = (data == null) ? null : data[index];
             return ExpansionPanelList(
               animationDuration: Duration(milliseconds: 500),
               children: [
@@ -85,8 +116,26 @@ class _MentorListState extends State<MentorList>
 //                        ),
                         IconButton(
                           icon: Icon(Icons.message),
-                          onPressed: () {
+                          onPressed: () async {
 
+                            Chat chat = await MessagingService.getChatBetweenUsers(currentUser.id, item.user.id);
+                            if (chat == null) {
+                              chat = Chat();
+                              chat.ids.add(currentUser.id);
+                              chat.ids.add(item.user.id);
+                              chat.users[currentUser.id] = {
+                                "avatarURL": currentUser.avatarURL,
+                                "firstName": currentUser.firstName,
+                                "lastName": currentUser.lastName,
+                              }.cast<String, dynamic>();
+                              chat.users[item.user.id] = {
+                                "avatarURL": item.user.avatarURL,
+                                "firstName": item.user.firstName,
+                                "lastName": item.user.lastName,
+                              }.cast<String, dynamic>();
+                            }
+                            
+                            Navigator.of(context).push(new MaterialPageRoute(builder: (context) => ChatPage(currentUser, chat)));
                           },
                         ),
 //                        Text(
@@ -109,7 +158,7 @@ class _MentorListState extends State<MentorList>
                     return Container(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        prepareData[index].header,
+                        "${item.user.firstName} ${item.user.lastName}",
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 18,
@@ -117,13 +166,13 @@ class _MentorListState extends State<MentorList>
                       ),
                     );
                   },
-                  isExpanded: prepareData[index].isExpanded,
+                  isExpanded: (item == null) ? false : item.isExpanded,
                 )
               ],
-              expansionCallback: (int item, bool status) {
+              expansionCallback: (int position, bool status) {
                 setState(() {
-                  prepareData[index].isExpanded =
-                  !prepareData[index].isExpanded;
+                  item.isExpanded =
+                  !item.isExpanded;
                 });
               },
             );
