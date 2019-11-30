@@ -51,6 +51,12 @@ class _ChatPageState extends State<ChatPage> {
     String id = chat.ids.where((val) => val != currentUser.id).toList()[0];
     var otherUser = chat.users[id];
 
+    MessagingService.getChat(chat).then((value) {
+      setState(() {
+        chat = value;
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: ListTile(

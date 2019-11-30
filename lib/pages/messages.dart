@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:impact/models/chat_model.dart';
 import 'package:impact/models/message.dart';
 import 'package:impact/services/messaging_service.dart';
 import 'package:impact/services/authentication.dart';
@@ -51,7 +50,7 @@ class _MessagesPageState extends State<MessagesPage>
                                 fontWeight: FontWeight.bold),
                           ),
                           new Text(
-                            ChatMockData[position].time,
+                            'Nov 29',
                             style: new TextStyle(
                                 color: Colors.grey, fontSize: 14.0),
                           ),

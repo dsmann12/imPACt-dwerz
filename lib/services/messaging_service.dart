@@ -3,6 +3,14 @@ import 'package:impact/models/message.dart';
 import 'dart:async';
 
 class MessagingService {
+
+  static Future<Chat> getChat(Chat chat) async {
+    await Firestore.instance.runTransaction((Transaction tx) async {
+      chat = Chat.fromSnapshot(await chat.reference.get());
+      chat.messages = await getMessages(chat);
+    });
+    return chat;
+  }
  
   static Future<Chat> addChat(Chat chat) async {
     Map map = chat.toMap();
