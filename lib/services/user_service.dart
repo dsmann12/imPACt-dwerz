@@ -63,4 +63,19 @@ class UserService {
 
     return mentors;
   }
+
+  static Future<List<User>> getMentorsByUser(String id) async {
+    List<User> mentors;
+    await Firestore.instance.runTransaction((Transaction tx) async {
+      QuerySnapshot snapshot = await Firestore.instance.collection('user')
+        .where("role", isEqualTo: 1)
+        .where("mentees", arrayContains: id)
+        .getDocuments();
+      List<DocumentSnapshot> documents = snapshot.documents;
+
+      mentors = documents.map((documentSnapshot) => User.fromSnapshot(documentSnapshot)).toList();
+    });
+
+    return mentors;
+  }
 }

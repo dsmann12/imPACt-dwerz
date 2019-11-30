@@ -27,7 +27,9 @@ class Chat {
     : assert(map['ids'] != null),
       assert(map['users'] != null),
       this.ids = List.from(map['ids']),
-      this.users = map['users'].cast<String, dynamic>();
+      this.users = map['users'].cast<String, dynamic>() {
+        this.messages = List<Message>();
+      }
 
   Chat.fromSnapshot(DocumentSnapshot snapshot)
     : this.fromMap(snapshot.data, reference: snapshot.reference);
