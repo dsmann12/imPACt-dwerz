@@ -4,6 +4,8 @@ import 'package:impact/pages/home.dart';
 import 'package:impact/pages/profile.dart';
 import 'package:impact/pages/contacts.dart';
 import 'package:impact/pages/connect.dart';
+import 'package:impact/pages/chat.dart';
+import 'package:impact/pages/messages.dart';
 
 class RootPage extends StatefulWidget
 {
@@ -25,7 +27,7 @@ class _RootPageState extends State<RootPage>
   int _currentIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(), //widget function call
-    MentorList(),
+    MessagesPage(),
     Recommendations(),
     MentorList(), // widget function call
     PersonalProfile(),
@@ -48,7 +50,7 @@ class _RootPageState extends State<RootPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ImPACt Application'),
+        title: Center(child: const Text('ImPACt')),
       ),
       body: MorpheusTabView(
         child: _widgetOptions[_currentIndex],
