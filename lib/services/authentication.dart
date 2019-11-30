@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact/models/user.dart';
 import 'package:impact/services/user_service.dart';
+import 'package:impact/models/message.dart';
+import 'package:impact/services/messaging_service.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -292,6 +294,38 @@ class AuthService {
         return "Error occurred";
        } else { 
          currentUser = await UserService.getUser(user.uid);
+
+        //  Chat chat = new Chat();
+        //  chat.ids.add(user.uid);
+        //  chat.ids.add("Bnf5vIBLRoT3pGM7JRHu8qGXMvM2");
+        //  chat.users["Bnf5vIBLRoT3pGM7JRHu8qGXMvM2"] = {
+        //      "avatarURL": "https://www.lsu.edu/eng/cse/people/faculty/photos/anas.mahmoud.jpg",
+        //      "firstName": "Anas",
+        //      "lastName": "Mahmoud"
+        //  }.cast<String, dynamic>();
+         
+        //  chat.users[currentUser.id] = {
+        //    "avatarURL": currentUser.avatarURL,
+        //    "firstName": "David",
+        //    "lastName": "Scheuermann"
+        //  }.cast<String, dynamic>();
+
+        //  chat = await MessagingService.addChat(chat);
+        //  Message message = new Message(chat.reference, 
+        //                               senderId: currentUser.id,
+        //                               senderFirstName: currentUser.firstName,
+        //                               senderLastName: currentUser.lastName,
+        //                               body: "Hey why did you have to be so harsh on our project?");
+        //  Message mymessage = new Message(chat.reference, 
+        //                               senderId: "Bnf5vIBLRoT3pGM7JRHu8qGXMvM2",
+        //                               senderFirstName: "Anas",
+        //                               senderLastName: "Mahmoud",
+        //                               body: "You guys can do better");
+        //  message = await MessagingService.addMessage(message);
+        //  mymessage = await MessagingService.addMessage(mymessage);
+
+        // List<Chat> chats = await MessagingService.getChatsByUser(user.uid);
+        // print(chats);
           // update current user
         //  currentUser.interests = [
         //     "Computer Science",
@@ -316,6 +350,7 @@ class AuthService {
          return null;
        }
     } catch (exception) {
+      print(exception.toString());
       return exception.toString();
     }
   }
