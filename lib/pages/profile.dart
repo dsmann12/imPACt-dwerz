@@ -98,8 +98,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     //SizedBox(height: 5.0),
 
-                    majorOrDepartment(),
-
                     Text(
                       user.college,
                       style: TextStyle(
@@ -108,25 +106,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           fontFamily: 'Montserrat'),
                     ),
 
-                    Text(
-                      user.department,
-                      style: TextStyle(
-                          fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
-                          fontFamily: 'Montserrat'),
-                    ),
-
-//                    Text(
-//                      'Research Interest(s): '
-//                          'Software Development, '
-//                          ' Mobile Application Development, '
-//                          ' Web Application Development, '
-//                          ' Mobile and Web Security ',
-//                      style: TextStyle(
-//                          fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                          fontFamily: 'Montserrat'),
-//                    ),
+                    majorOrDepartment(),
 
 
                     Row(
