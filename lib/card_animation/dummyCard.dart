@@ -21,7 +21,7 @@ Positioned cardDemoDummy(
       elevation: 4.0,
       child: new Container(
         alignment: Alignment.center,
-        width: screenSize.width / 1.2 + cardWidth,
+        width: screenSize.width / 1.2,
         height: screenSize.height / 1.7,
         decoration: new BoxDecoration(
           color: new Color.fromRGBO(121, 114, 173, 1.0),
@@ -30,7 +30,7 @@ Positioned cardDemoDummy(
         child: new Column(
           children: <Widget>[
             new Container(
-              width: screenSize.width / 1.2 + cardWidth,
+              width: screenSize.width / 1.2,
               height: screenSize.height / 2.2,
               decoration: new BoxDecoration(
                 borderRadius: new BorderRadius.only(
@@ -40,7 +40,7 @@ Positioned cardDemoDummy(
               ),
             ),
             new Container(
-                width: screenSize.width / 1.2 + cardWidth,
+                width: screenSize.width / 1.2,
                 height: screenSize.height / 1.7 - screenSize.height / 2.2,
                 alignment: Alignment.center,
                 child: new Row(
@@ -58,7 +58,7 @@ Positioned cardDemoDummy(
                             borderRadius: new BorderRadius.circular(60.0),
                           ),
                           child: new Text(
-                            "DON'T",
+                            "Dismiss",
                             style: new TextStyle(color: Colors.white),
                           ),
                         )),
@@ -74,7 +74,7 @@ Positioned cardDemoDummy(
                             borderRadius: new BorderRadius.circular(60.0),
                           ),
                           child: new Text(
-                            "I'M IN",
+                            "Send Request",
                             style: new TextStyle(color: Colors.white),
                           ),
                         ))
