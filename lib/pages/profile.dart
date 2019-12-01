@@ -15,6 +15,30 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
   User user = AuthService.getCurrentUser();
 
+  Widget labelTag()
+  {
+    return (user.isMentor()) ?
+        Chip(backgroundColor: Colors.deepOrange, label: Text('Mentor')) :
+        Chip(backgroundColor: Colors.deepPurple, label: Text('Mentee'));
+  }
+
+  Widget majorOrDepartment()
+  {
+    return (user.isMentor()) ?
+        Text(
+          user.department,
+            style: TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Montserrat'),
+        ) :
+        Text(
+          user.major,
+          style: TextStyle(
+          fontSize: 15.0,
+          fontFamily: 'Montserrat'),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,103 +66,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                             boxShadow: [
                               BoxShadow(blurRadius: 7.0, color: Colors.black)
                             ])),
-                    //SizedBox(height: 50.0),
-//                    Container(
-//                      child: Column(
-//                        //controller: scrollController,
-//                        children: <Widget>[
-//                          Text(
-//                            user.firstName + " " + user.lastName,
-//                            style: TextStyle(
-//                                fontSize: 30.0,
-//                                fontWeight: FontWeight.bold,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//                          //SizedBox(height: 15.0),
-//                          Chip(backgroundColor: Colors.blue, label: Text("Mentee"),),
-//                          Text(
-//                            user.description,
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//
-//                          Text(
-//                            user.institution,
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//                          //SizedBox(height: 5.0),
-//
-//                          Text(
-//                            user.major,
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//
-//                          Text(
-//                            user.college,
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//
-//                          Text(
-//                            user.department,
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//
-//                          Text(
-//                            'Research Interest(s): '
-//                                'Software Development, '
-//                                ' Mobile Application Development, '
-//                                ' Web Application Development, '
-//                                ' Mobile and Web Security ',
-//                            style: TextStyle(
-//                                fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                                fontFamily: 'Montserrat'),
-//                          ),
-//
-//
-//                          Row(
-//                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                            children: <Widget>[
-//                              IconButton(
-//                                icon: Icon(Icons.edit),
-//                                tooltip: 'Tap to edit profile',
-//                                onPressed: () {
-//
-//                                },
-//                              ),
-//                              IconButton(
-//                                icon: Icon(Icons.power_settings_new),
-//                                tooltip: 'Tap to logout',
-//                                onPressed: () {
-//                                  AuthService.signOut();
-//                                  Navigator.of(context).pushReplacement(FadePageRoute(
-//                                      builder: (context) => LoginScreen()
-//                                  ));
-//                                },
-//                              ),
-//                            ],
-//                          ),
-//
-//                  ],
-//                )),
-          ],
-
-        ),
-    ),
+                    ])),
             Container(
                 child: ListView(
                   shrinkWrap: true,
@@ -152,8 +80,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           fontFamily: 'Montserrat'),
                       textAlign: TextAlign.center,
                     ),
-                    //SizedBox(height: 15.0),
-                    Chip(backgroundColor: Colors.deepPurple, label: Text("Mentee"), ),
+                    labelTag(), //Mentor/Mentee Tag
                     Text(
                       user.description,
                       style: TextStyle(
@@ -171,13 +98,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     //SizedBox(height: 5.0),
 
-                    Text(
-                      user.major,
-                      style: TextStyle(
-                          fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
-                          fontFamily: 'Montserrat'),
-                    ),
+                    majorOrDepartment(),
 
                     Text(
                       user.college,
@@ -195,22 +116,17 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           fontFamily: 'Montserrat'),
                     ),
 
-                    Text(
-                      'Research Interest(s): '
-                          'Software Development, '
-                          ' Mobile Application Development, '
-                          ' Web Application Development, '
-                          ' Mobile and Web Security ',
-                      style: TextStyle(
-                          fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
-                          fontFamily: 'Montserrat'),
-                    ),
-
-                    Text(
-                      'Mentors: ' +
-                      user.mentors[0] + ', ' + user.mentors[1] + ', ' + user.mentors[2] + ', '  + user.mentors[3],
-                    ),
+//                    Text(
+//                      'Research Interest(s): '
+//                          'Software Development, '
+//                          ' Mobile Application Development, '
+//                          ' Web Application Development, '
+//                          ' Mobile and Web Security ',
+//                      style: TextStyle(
+//                          fontSize: 15.0,
+////                          fontStyle: FontStyle.italic,
+//                          fontFamily: 'Montserrat'),
+//                    ),
 
 
                     Row(
@@ -238,8 +154,62 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
                   ],
                 )),
-    ],
-    ),
+//                    Column(
+//                      children: <Widget>[
+//                        Text(
+//                          user.firstName + " " + user.lastName,
+//                          style: TextStyle(
+//                              fontSize: 30.0,
+//                              fontWeight: FontWeight.bold,
+//                              fontFamily: 'Montserrat'),
+//                        ),
+//                        //SizedBox(height: 15.0),
+//                        labelTag(),
+//                        Text(
+//                          user.institution,
+//                          style: TextStyle(
+//                              fontSize: 15.0,
+////                          fontStyle: FontStyle.italic,
+//                              fontFamily: 'Montserrat'),
+//                        ),
+//                        //SizedBox(height: 5.0),
+//
+//                        Text(
+//                          user.major,
+//                          style: TextStyle(
+//                              fontSize: 15.0,
+////                          fontStyle: FontStyle.italic,
+//                              fontFamily: 'Montserrat'),
+//                        ),
+//
+//                        Text(
+//                          user.college,
+//                          style: TextStyle(
+//                              fontSize: 15.0,
+////                          fontStyle: FontStyle.italic,
+//                              fontFamily: 'Montserrat'),
+//                        ),
+//
+//                        Text(
+//                          user.department.toString(),
+//                          style: TextStyle(
+//                              fontSize: 15.0,
+////                          fontStyle: FontStyle.italic,
+//                              fontFamily: 'Montserrat'),
+//                        ),
+//
+////                        Text(
+////                          'Research Interest(s): '
+////                              'Software Development, '
+////                              ' Mobile Application Development, '
+////                              ' Web Application Development, '
+////                              ' Mobile and Web Security ',
+////                          style: TextStyle(
+////                              fontSize: 15.0,
+
+          ],
+
+        ),
     );
   }
 }
