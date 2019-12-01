@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:impact/card_animation/card_detail.dart';
 import 'package:flutter/material.dart';
-
 import 'package:impact/models/user.dart';
 
 Positioned cardDemo(
@@ -22,12 +21,12 @@ Positioned cardDemo(
     Function swipeLeft) {
   Size screenSize = MediaQuery.of(context).size;
   // print("Card");
-  return new Positioned(
+  return Positioned(
     bottom: 100.0 + bottom,
     right: flag == 0 ? right != 0.0 ? right : null : null,
     left: flag == 1 ? right != 0.0 ? right : null : null,
-    child: new Dismissible(
-      key: new Key(new Random().toString()),
+    child: Dismissible(
+      key: Key(Random().toString()),
       crossAxisEndOffset: -0.3,
       onResize: () {
         //print("here");
@@ -46,17 +45,17 @@ Positioned cardDemo(
           // addImg(img);
           addImg(user);
       },
-      child: new Transform(
+      child: Transform(
         alignment: flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
         //transform: null,
-        transform: new Matrix4.skewX(skew),
+        transform: Matrix4.skewX(skew),
         //..rotateX(-math.pi / rotation),
-        child: new RotationTransition(
-          turns: new AlwaysStoppedAnimation(
+        child: RotationTransition(
+          turns: AlwaysStoppedAnimation(
               flag == 0 ? rotation / 360 : -rotation / 360),
-          child: new Hero(
+          child: Hero(
             tag: "img",
-            child: new GestureDetector(
+            child: GestureDetector(
               onTap: () {
                 // Navigator.push(
                 //     context,
@@ -67,21 +66,22 @@ Positioned cardDemo(
                   pageBuilder: (_, __, ___) => new DetailPage(user: user),
                 ));
               },
-              child: new Card(
+              child: Card(
                 color: Colors.transparent,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 elevation: 4.0,
-                child: new Container(
+                child: Container(
                   alignment: Alignment.center,
-                  width: screenSize.width / 1.2 + cardWidth,
+                  width: screenSize.width / 1.2,
                   height: screenSize.height / 1.7,
-                  decoration: new BoxDecoration(
-                    color: new Color.fromRGBO(121, 114, 173, 1.0),
-                    borderRadius: new BorderRadius.circular(8.0),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(121, 114, 173, 1.0),
+                    //borderRadius: new BorderRadius.circular(7.0),
                   ),
                   child: new Column(
                     children: <Widget>[
                       new Container(
-                        width: screenSize.width / 1.2 + cardWidth,
+                        width: screenSize.width / 1.2,
                         height: screenSize.height / 2.2,
                         decoration: new BoxDecoration(
                           borderRadius: new BorderRadius.only(
@@ -92,7 +92,7 @@ Positioned cardDemo(
                         ),
                       ),
                       new Container(
-                          width: screenSize.width / 1.2 + cardWidth,
+                          width: screenSize.width / 1.2,
                           height:
                           screenSize.height / 1.7 - screenSize.height / 2.2,
                           alignment: Alignment.center,
