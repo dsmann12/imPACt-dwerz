@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:impact/card_animation/card_detail.dart';
 import 'package:flutter/material.dart';
 
+import 'package:impact/models/user.dart';
+
 Positioned cardDemo(
-    DecorationImage img,
+    User user,
+    // DecorationImage img,
     double bottom,
     double right,
     double left,
@@ -37,9 +40,11 @@ Positioned cardDemo(
       onDismissed: (DismissDirection direction) {
 //          _swipeAnimation();
         if (direction == DismissDirection.endToStart)
-          dismissImg(img);
+          // dismissImg(img);
+          dismissImg(user);
         else
-          addImg(img);
+          // addImg(img);
+          addImg(user);
       },
       child: new Transform(
         alignment: flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
@@ -58,7 +63,8 @@ Positioned cardDemo(
                 //     new MaterialPageRoute(
                 //         builder: (context) => new DetailPage(type: img)));
                 Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new DetailPage(type: img),
+                  // pageBuilder: (_, __, ___) => new DetailPage(type: img),
+                  pageBuilder: (_, __, ___) => new DetailPage(user: user),
                 ));
               },
               child: new Card(
@@ -81,7 +87,8 @@ Positioned cardDemo(
                           borderRadius: new BorderRadius.only(
                               topLeft: new Radius.circular(8.0),
                               topRight: new Radius.circular(8.0)),
-                          image: img,
+                          // image: img,
+                          image: DecorationImage(image: NetworkImage(user.avatarURL), fit: BoxFit.cover),
                         ),
                       ),
                       new Container(
