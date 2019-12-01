@@ -1,12 +1,15 @@
-import 'package:impact/card_animation//card_data.dart';
+import 'package:impact/card_animation/card_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:impact/models/user.dart';
 
 class DetailPage extends StatefulWidget {
-  final DecorationImage type;
-  const DetailPage({Key key, this.type}) : super(key: key);
+  final User user;
+  // final DecorationImage type;
+  const DetailPage({Key key, this.user}) : super(key: key);
   @override
-  _DetailPageState createState() => new _DetailPageState(type: type);
+  // _DetailPageState createState() => new _DetailPageState(type: type);
+  _DetailPageState createState() => new _DetailPageState(user: user);
 }
 
 enum AppBarBehavior { normal, pinned, floating, snapping }
@@ -15,8 +18,10 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   AnimationController _containerController;
   Animation<double> width;
   Animation<double> height;
-  DecorationImage type;
-  _DetailPageState({this.type});
+  User user;
+  // DecorationImage type;
+  // _DetailPageState({this.type});
+  _DetailPageState({this.user});
   List data = imageData;
   double _appBarHeight = 256.0;
   AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
@@ -60,7 +65,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     timeDilation = 0.7;
-    int img = data.indexOf(type);
+    // int img = data.indexOf(type);
     //print("detail");
     return new Theme(
       data: new ThemeData(
@@ -117,7 +122,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                 width: width.value,
                                 height: _appBarHeight,
                                 decoration: new BoxDecoration(
-                                  image: data[img],
+                                  // image: data[img],
+                                  image: DecorationImage(image: NetworkImage(user.avatarURL),fit: BoxFit.cover),
                                 ),
                               ),
                             ],
@@ -183,8 +189,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  new Text(
-                                      "I am a professor at the Department of Computer Science & Engineering at Louisiana State University."),
+                                  new Text(user.description),
 //                                  new Container(
 //                                    margin: new EdgeInsets.only(top: 25.0),
 //                                    padding: new EdgeInsets.only(
