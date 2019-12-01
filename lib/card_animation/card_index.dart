@@ -6,6 +6,11 @@ import 'package:impact/card_animation/currentCard.dart';
 //import 'package:animation_exp/PageReveal/page_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:impact/models/user.dart';
+import 'package:impact/models/request.dart';
+import 'package:impact/services/authentication.dart';
+import 'package:impact/services/user_service.dart';
+import 'package:impact/services/request_service.dart';
 
 class CardDemo extends StatefulWidget {
   @override
@@ -19,11 +24,18 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
   Animation<double> bottom;
   Animation<double> width;
   int flag = 0;
-
+  User currentUser = AuthService.getCurrentUser();
+  List<User> mentors;
   List data = imageData;
   List selectedData = [];
   void initState() {
     super.initState();
+
+    UserService.getMentors().then((users) {
+      setState(() {
+        mentors = users;
+      });
+    });
 
     _buttonController = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
@@ -40,8 +52,10 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
     rotate.addListener(() {
       setState(() {
         if (rotate.isCompleted) {
-          var i = data.removeLast();
-          data.insert(0, i);
+          // var i = data.removeLast();
+          var i = mentors.removeLast();
+          // data.insert(0, i);
+          mentors.insert(0, i);
 
           _buttonController.reset();
         }
@@ -89,16 +103,23 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
     } on TickerCanceled {}
   }
 
-  dismissImg(DecorationImage img) {
+  // dismissImg(DecorationImage img) {
+  dismissImg(User user) {
     setState(() {
-      data.remove(img);
+      // data.remove(img);
+      mentors.remove(user);
     });
   }
 
-  addImg(DecorationImage img) {
+  // addImg(DecorationImage img) {
+  addImg(User user) {
     setState(() {
-      data.remove(img);
-      selectedData.add(img);
+      // data.remove(img);
+      mentors.remove(user);
+      // selectedData.add(img);
+      selectedData.add(user);
+      Request request = Request(mentee: currentUser, mentor: user);
+      RequestService.submitRequest(request);
     });
   }
 
@@ -126,6 +147,7 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
     var dataLength = data.length;
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = -10.0;
+
     return (new Scaffold(
         appBar: new AppBar(
           elevation: 0.0,
@@ -187,8 +209,9 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
           child: dataLength > 0
               ? new Stack(
               alignment: AlignmentDirectional.center,
-              children: data.map((item) {
-                if (data.indexOf(item) == dataLength - 1) {
+              children: (mentors == null) ? <Widget>[Center(child: CircularProgressIndicator(),)] : mentors.map((item) {
+                // if (data.indexOf(item) == dataLength - 1) {
+                if (mentors.indexOf(item) == mentors.length - 1) {
                   return cardDemo(
                       item,
                       bottom.value,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:impact/models/user.dart';
 
 Positioned cardDemoDummy(
-    DecorationImage img,
+    User user,
+    // DecorationImage img,
     double bottom,
     double right,
     double left,
@@ -36,7 +38,7 @@ Positioned cardDemoDummy(
                 borderRadius: new BorderRadius.only(
                     topLeft: new Radius.circular(8.0),
                     topRight: new Radius.circular(8.0)),
-                image: img,
+                image: DecorationImage(image: NetworkImage(user.avatarURL), fit: BoxFit.cover),
               ),
             ),
             new Container(

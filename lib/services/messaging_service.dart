@@ -64,4 +64,31 @@ class MessagingService {
 
     return chats;
   }
+
+  static Future<Chat> getChatBetweenUsers(String id1, String id2) async {
+    try {
+      Chat chat;
+      List<Chat> chats;
+
+      await Firestore.instance.runTransaction((Transaction tx) async {
+        QuerySnapshot snapshot = await Firestore.instance.collection('chat')
+            .where("ids", arrayContains: id1)
+            .getDocuments();
+        List<DocumentSnapshot> documents = snapshot.documents;
+        chats = documents.map((documentSnapshot) => Chat.fromSnapshot(documentSnapshot)).toList();
+
+        chats = chats.where((chat) => chat.ids.contains(id2)).toList();
+        if (chats.length == 0) {
+          return null;
+        }
+        chat = chats[0];
+        chat.messages = await getMessages(chat);
+      });
+
+      return chat;
+    } catch (exception) {
+      print(exception.toString());
+      return null;
+    }
+  }
 }

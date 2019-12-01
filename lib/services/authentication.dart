@@ -4,6 +4,8 @@ import 'package:impact/models/user.dart';
 import 'package:impact/services/user_service.dart';
 import 'package:impact/models/message.dart';
 import 'package:impact/services/messaging_service.dart';
+import 'package:impact/models/request.dart';
+import 'package:impact/services/request_service.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -294,6 +296,18 @@ class AuthService {
         return "Error occurred";
        } else { 
          currentUser = await UserService.getUser(user.uid);
+         
+        //  User otherUser = await UserService.getUser("MaofZN1iYWZRcp8yXSSGNlKCG763");
+
+        // //  Request request = Request(mentee: currentUser, mentor: otherUser);
+
+        // //  request = await RequestService.submitRequest(request);
+
+        //  List<Request> requests = await RequestService.getRequestsByUser(otherUser.id);
+
+        //  Request acceptedRequest = await RequestService.acceptRequest(requests[0]);
+
+        //  print(acceptedRequest);
 
         //  Chat chat = new Chat();
         //  chat.ids.add(user.uid);
