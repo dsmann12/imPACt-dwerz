@@ -52,8 +52,10 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
     rotate.addListener(() {
       setState(() {
         if (rotate.isCompleted) {
-          var i = data.removeLast();
-          data.insert(0, i);
+          // var i = data.removeLast();
+          var i = mentors.removeLast();
+          // data.insert(0, i);
+          mentors.insert(0, i);
 
           _buttonController.reset();
         }
@@ -207,7 +209,7 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
           child: dataLength > 0
               ? new Stack(
               alignment: AlignmentDirectional.center,
-              children: (mentors == null) ? Center(child: CircularProgressIndicator(),) : mentors.map((item) {
+              children: (mentors == null) ? <Widget>[Center(child: CircularProgressIndicator(),)] : mentors.map((item) {
                 // if (data.indexOf(item) == dataLength - 1) {
                 if (mentors.indexOf(item) == mentors.length - 1) {
                   return cardDemo(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to cloud firestore in Firebase
 import 'package:impact/models/user.dart';
 import 'dart:async';
+import 'package:impact/services/authentication.dart';
 
 class UserService {
 
@@ -61,6 +62,8 @@ class UserService {
       mentors = documents.map((documentSnapshot) => User.fromSnapshot(documentSnapshot)).toList();
     });
 
+    User currentUser = AuthService.getCurrentUser();
+    mentors = mentors.where((mentor) => !mentor.mentees.contains(currentUser.id) && mentor.id != currentUser.id).toList();
     return mentors;
   }
 
