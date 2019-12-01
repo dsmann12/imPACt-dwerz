@@ -250,98 +250,119 @@ class _ProfileEdit extends State<ProfileEdit> {
       ),
       body: new Container(
         padding: new EdgeInsets.all(10.0),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: new ListView(
+          // padding: const EdgeInsets.all(10),
           children: <Widget>[
-            TextFormField(
-              controller: firstnameController,
-              decoration: InputDecoration(
-                labelText: 'First Name',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            // Text(
+            //   "filler",
+            //   style: TextStyle(fontSize: 300)
+            // ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: firstnameController,
+                decoration: InputDecoration(
+                  labelText: 'First Name',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: lastnameController,
-              decoration: InputDecoration(
-                labelText: 'Last Name',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: lastnameController,
+                decoration: InputDecoration(
+                  labelText: 'Last Name',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: avatarController,
-              decoration: InputDecoration(
-                labelText: 'Avatar URL',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: avatarController,
+                decoration: InputDecoration(
+                  labelText: 'Avatar URL',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: majorController,
-              decoration: InputDecoration(
-                labelText: 'Major',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: majorController,
+                decoration: InputDecoration(
+                  labelText: 'Major',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: institutionController,
-              decoration: InputDecoration(
-                labelText: 'Institution',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: institutionController,
+                decoration: InputDecoration(
+                  labelText: 'Institution',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: collegeController,
-              decoration: InputDecoration(
-                labelText: 'College',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: collegeController,
+                decoration: InputDecoration(
+                  labelText: 'College',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
-            Spacer(flex: 1),
-            TextFormField(
-              controller: departmentController,
-              decoration: InputDecoration(
-                labelText: 'Department',
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: departmentController,
+                decoration: InputDecoration(
+                  labelText: 'Department',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
-              ),
+              )
             ),
 
-            // Spacer(flex: 1),
             // TextFormField(
             //   controller: interestsController,
             //   decoration: InputDecoration(
@@ -353,7 +374,9 @@ class _ProfileEdit extends State<ProfileEdit> {
             //   ),
             // ),
 
-            CheckboxListTile (
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: CheckboxListTile (
                value: roleChecked,
                title: Text("Mentor"),
                onChanged: (value) {
@@ -361,9 +384,9 @@ class _ProfileEdit extends State<ProfileEdit> {
                   roleChecked = value;
                 });
               },
+              )
             ),
 
-            Spacer(flex: 8),
             FlatButton(
               color: Colors.orange,
               textColor: Colors.white,
