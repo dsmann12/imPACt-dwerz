@@ -3,7 +3,7 @@ import 'package:impact/pages/login.dart';
 import 'package:impact/services/authentication.dart';
 import 'package:impact/pages/routes.dart';
 import 'package:impact/models/user.dart';
-
+import 'package:impact/services/user_service.dart';
 
 
 class PersonalProfile extends StatefulWidget {
@@ -28,14 +28,18 @@ class _PersonalProfileState extends State<PersonalProfile> {
         Text(
           user.department,
             style: TextStyle(
-            fontSize: 15.0,
-            fontFamily: 'Montserrat'),
+              fontSize: 15.0,
+              fontFamily: 'Montserrat'
+            ),
+            textAlign: TextAlign.center,
         ) :
         Text(
           user.major,
           style: TextStyle(
-          fontSize: 15.0,
-          fontFamily: 'Montserrat'),
+            fontSize: 15.0,
+            fontFamily: 'Montserrat'
+          ),
+          textAlign: TextAlign.center,
         );
   }
 
@@ -85,16 +89,16 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       user.description,
                       style: TextStyle(
                           fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
                           fontFamily: 'Montserrat'),
+                      textAlign: TextAlign.center,
                     ),
 
                     Text(
                       user.institution,
                       style: TextStyle(
                           fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
                           fontFamily: 'Montserrat'),
+                      textAlign: TextAlign.center,
                     ),
                     //SizedBox(height: 5.0),
 
@@ -102,8 +106,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       user.college,
                       style: TextStyle(
                           fontSize: 15.0,
-//                          fontStyle: FontStyle.italic,
                           fontFamily: 'Montserrat'),
+                      textAlign: TextAlign.center,
                     ),
 
                     majorOrDepartment(),
@@ -116,7 +120,10 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           icon: Icon(Icons.edit),
                           tooltip: 'Tap to edit profile',
                           onPressed: () {
-
+                            Navigator.of(context)
+                            .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+                              return new ProfileEdit();
+                              }));
                           },
                         ),
                         IconButton(
@@ -194,6 +201,204 @@ class _PersonalProfileState extends State<PersonalProfile> {
   }
 }
 
+class ProfileEdit extends StatefulWidget {
+  @override
+  _ProfileEdit createState() => _ProfileEdit();
+}
+class _ProfileEdit extends State<ProfileEdit> {
+  var avatarController = TextEditingController(text: AuthService.getCurrentUser().avatarURL);
+  var collegeController = TextEditingController(text: AuthService.getCurrentUser().college);
+  var departmentController = TextEditingController(text: AuthService.getCurrentUser().department);
+  var descriptionController = TextEditingController(text: AuthService.getCurrentUser().description);
+  var firstnameController = TextEditingController(text: AuthService.getCurrentUser().firstName);
+  var lastnameController = TextEditingController(text: AuthService.getCurrentUser().lastName);
+  var institutionController = TextEditingController(text: AuthService.getCurrentUser().institution);
+  // var interestsController = TextEditingController(text: AuthService.getCurrentUser().interests.toString());
+  var majorController = TextEditingController(text: AuthService.getCurrentUser().major);
+  bool roleChecked = (AuthService.getCurrentUser().isMentor());
+
+  @override
+  Widget build(BuildContext context) {
+    User user = AuthService.getCurrentUser();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Profile'),
+      ),
+      body: new Container(
+        padding: new EdgeInsets.all(10.0),
+        child: new ListView(
+          children: <Widget>[
+            // Text(
+            //   "filler",
+            //   style: TextStyle(fontSize: 300)
+            // ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: firstnameController,
+                decoration: InputDecoration(
+                  labelText: 'First Name',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: lastnameController,
+                decoration: InputDecoration(
+                  labelText: 'Last Name',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: avatarController,
+                decoration: InputDecoration(
+                  labelText: 'Avatar URL',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: majorController,
+                decoration: InputDecoration(
+                  labelText: 'Major',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: institutionController,
+                decoration: InputDecoration(
+                  labelText: 'Institution',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: collegeController,
+                decoration: InputDecoration(
+                  labelText: 'College',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                controller: departmentController,
+                decoration: InputDecoration(
+                  labelText: 'Department',
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
+                ),
+              )
+            ),
+
+            // TextFormField(
+            //   controller: interestsController,
+            //   decoration: InputDecoration(
+            //     labelText: 'Interests',
+            //     border: new OutlineInputBorder(
+            //       borderRadius: new BorderRadius.circular(25.0),
+            //       borderSide: new BorderSide(),
+            //     ),
+            //   ),
+            // ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: CheckboxListTile (
+               value: roleChecked,
+               title: Text("Mentor"),
+               onChanged: (value) {
+                setState(() {
+                  roleChecked = value;
+                });
+              },
+              )
+            ),
+
+            FlatButton(
+              color: Colors.orange,
+              textColor: Colors.white,
+              padding: EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0),
+              ),
+              onPressed: () {
+                user.institution = institutionController.text;
+                user.major = majorController.text;
+                user.avatarURL = avatarController.text;
+                user.college = collegeController.text;
+                user.department = departmentController.text;
+                user.description = descriptionController.text;
+                user.firstName = firstnameController.text;
+                user.lastName = lastnameController.text;
+                
+                // user.interests = interestsController; 
+                if(roleChecked) {
+                  user.role = 1;
+                } else {
+                  user.role = 0;
+                }
+
+                UserService.updateUser(user);
+              },
+              child: Text(
+                "Save Changes",
+                style: TextStyle(fontSize: 25.0),
+              ),
+            ),
+          ],
+        ),
+      )
+    );
+  }
+}
 
 
 class getClipper extends CustomClipper<Path> {
