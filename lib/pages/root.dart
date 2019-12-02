@@ -16,7 +16,7 @@ class RootPage extends StatefulWidget
 
 class _RootPageState extends State<RootPage>
 {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 //  final List<Widget> _screens = [
@@ -24,7 +24,7 @@ class _RootPageState extends State<RootPage>
 //    Scaffold(backgroundColor: Colors.red),
 //    Scaffold(backgroundColor: Colors.blue),
 //  ];
-  int _currentIndex = 0;
+  int _currentIndex = 2;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(), //widget function call
     MessagesPage(),
@@ -81,7 +81,8 @@ class _RootPageState extends State<RootPage>
           currentIndex: _selectedIndex,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          selectedItemColor: Colors.green[600],
+          // selectedItemColor: Colors.green[600],
+          selectedItemColor: Colors.deepPurple,
           unselectedItemColor: Colors.black,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {

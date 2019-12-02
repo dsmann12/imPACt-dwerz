@@ -5,8 +5,10 @@ import 'package:impact/services/authentication.dart';
 
 class UserService {
 
+  final Duration timeout = const Duration(seconds: 30);
+
   static Future<List<User>> addUsers(List<User> users) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       users.forEach((user) async {
         Map map = user.toMap();
         user.reference = await Firestore.instance.collection('user').add(map);
@@ -18,7 +20,7 @@ class UserService {
 
   static Future<User> addUser(User user) async {
     Map map = user.toMap();
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       user.reference = await Firestore.instance.collection('user').add(map);
     });
 
@@ -34,7 +36,7 @@ class UserService {
   }
 
   static Future<User> updateUser(User user) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       await user.reference.updateData(user.toMap());
     });
     
@@ -43,7 +45,7 @@ class UserService {
 
   static Future<List<User>> getUsers(List<String> ids) async {
     List<User> users;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('user').where("id", arrayContains: ids).getDocuments();
       List<DocumentSnapshot> documents = snapshot.documents;
 
@@ -55,7 +57,7 @@ class UserService {
 
   static Future<List<User>> getMentors() async {
     List<User> mentors;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('user').where("role", isEqualTo: 1).getDocuments();
       List<DocumentSnapshot> documents = snapshot.documents;
 
@@ -69,7 +71,7 @@ class UserService {
 
   static Future<List<User>> getMentorsByUser(String id) async {
     List<User> mentors;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('user')
         .where("role", isEqualTo: 1)
         .where("mentees", arrayContains: id)
@@ -84,7 +86,7 @@ class UserService {
 
   static Future<List<User>> getMenteesByUser(String id) async {
     List<User> mentees;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('user')
         .where("mentors", arrayContains: id)
         .getDocuments();

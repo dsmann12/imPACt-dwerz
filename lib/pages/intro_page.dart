@@ -2,6 +2,8 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:flutter/material.dart';
 import 'package:impact/pages/root.dart';
+import 'package:impact/pages/routes.dart';
+
 
 class IntroScreen extends StatefulWidget {
   IntroScreen({Key key}) : super(key: key);
@@ -18,11 +20,11 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void onDonePress() {
     // TODO: go to next screen
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return RootPage();
-    }));
+    Navigator.of(context).pushReplacement(FadePageRoute(
+          builder: (context) => RootPage(),
+    ));
   }
-  @override
+
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
@@ -30,7 +32,6 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  @override
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
@@ -39,7 +40,6 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  @override
   Widget renderSkipBtn() {
     return Icon(
       Icons.skip_next,
