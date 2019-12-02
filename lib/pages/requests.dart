@@ -68,7 +68,9 @@ class _RequestsPageState extends State<RequestsPage>
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Center(child: Text("imPACt")),
+          // title: Center(child: Text("imPACt")),
+          title: Text("imPACt"),
+          centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
               Tab(icon: Text("Received")),
@@ -176,65 +178,82 @@ class _RequestsPageState extends State<RequestsPage>
   }
 
   Widget _buildSentRequestListItem(Request request) {
-    return GestureDetector( 
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-        child: new Card(
-            elevation: 1.0,
-            // color: const Color(0xFFFFFFFF),
+    return Dismissible(
+      key: Key(request.toString()),
+      background: Container(
+        alignment: AlignmentDirectional.centerEnd,
+        color: Colors.red,
+        child: Padding(
+          padding: EdgeInsets.only(right:10),
+          child: Icon(
+            Icons.delete,
             color: Colors.white,
-            child: new ListTile(
-              leading: new CircleAvatar(
-                backgroundImage: new NetworkImage(request.mentor.avatarURL),
-              ),
-              // title: new Column(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: <Widget>[
-               title:   Text(
-                    // ChatMockData[position].name,
-                    "${request.mentor.firstName} ${request.mentor.lastName} ",
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold),
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: <Widget>[
-                  //     Expanded(
-                  //       child: RaisedButton(
-                  //         color: Colors.deepPurple,
-                  //         textColor: Colors.white,
-                  //         onPressed: () => RequestService.acceptRequest(request),
-                  //         child: Text("Accept")
-                  //       ),
-                  //     ),
-                  //     Expanded(
-                  //       child: Padding(
-                  //         padding: EdgeInsets.only(left: 10),
-                  //         child: RaisedButton(
-                  //           color: Colors.red,
-                  //           textColor: Colors.white,
-                  //           onPressed: () => RequestService.denyRequest(request),
-                  //           child: Text("Deny")
-                  //         )
-                  //       )
-                  //     )
-                  //   ]
-                  // ),
-                // ],
-              // ),
-              trailing: Text(status[request.status], style: TextStyle(color: colors[request.status])),
-              subtitle: new Container(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: new Text(
-                  // ChatMockData[position].message,
-                  "${request.mentor.institution}\n${request.mentor.department}",
-                  style: new TextStyle(
-                      color: Colors.grey, fontSize: 15.0),
-                ),
-              ),
-            )
+            size: 30.0
           )
         )
+      ),
+      onDismissed: (direction) => setState(() {requests.remove(request); RequestService.removeRequest(request);}),
+      direction: DismissDirection.endToStart,
+      child: GestureDetector( 
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+          child: new Card(
+              elevation: 1.0,
+              // color: const Color(0xFFFFFFFF),
+              color: Colors.white,
+              child: new ListTile(
+                leading: new CircleAvatar(
+                  backgroundImage: new NetworkImage(request.mentor.avatarURL),
+                ),
+                // title: new Column(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: <Widget>[
+                title:   Text(
+                      // ChatMockData[position].name,
+                      "${request.mentor.firstName} ${request.mentor.lastName} ",
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: <Widget>[
+                    //     Expanded(
+                    //       child: RaisedButton(
+                    //         color: Colors.deepPurple,
+                    //         textColor: Colors.white,
+                    //         onPressed: () => RequestService.acceptRequest(request),
+                    //         child: Text("Accept")
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Padding(
+                    //         padding: EdgeInsets.only(left: 10),
+                    //         child: RaisedButton(
+                    //           color: Colors.red,
+                    //           textColor: Colors.white,
+                    //           onPressed: () => RequestService.denyRequest(request),
+                    //           child: Text("Deny")
+                    //         )
+                    //       )
+                    //     )
+                    //   ]
+                    // ),
+                  // ],
+                // ),
+                trailing: Text(status[request.status], style: TextStyle(color: colors[request.status])),
+                subtitle: new Container(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: new Text(
+                    // ChatMockData[position].message,
+                    "${request.mentor.institution}\n${request.mentor.department}",
+                    style: new TextStyle(
+                        color: Colors.grey, fontSize: 15.0),
+                  ),
+                ),
+              )
+            )
+          )
+      )
     );
   }
 }
