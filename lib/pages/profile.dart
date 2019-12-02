@@ -4,6 +4,7 @@ import 'package:impact/services/authentication.dart';
 import 'package:impact/pages/routes.dart';
 import 'package:impact/models/user.dart';
 import 'package:impact/services/user_service.dart';
+import 'package:impact/pages/root.dart';
 
 
 class PersonalProfile extends StatefulWidget {
@@ -43,6 +44,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
         );
   }
 
+  ImageProvider displayProfilePic()
+  {
+    return (user.avatarURL == "") ?
+        AssetImage('assets/profile_placeholder.png') :
+        NetworkImage(user.avatarURL);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +71,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         decoration: BoxDecoration(
 //                            color: Colors.red,
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    user.avatarURL),
+                                image: displayProfilePic(),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
-                            boxShadow: [
-                              BoxShadow(blurRadius: 7.0, color: Colors.black)
-                            ])),
+//                            boxShadow: [
+//                              BoxShadow(blurRadius: 7.0, color: Colors.black)
+//                        ]
+                            )),
                     ])),
             Container(
                 child: ListView(
@@ -206,6 +214,9 @@ class ProfileEdit extends StatefulWidget {
   _ProfileEdit createState() => _ProfileEdit();
 }
 class _ProfileEdit extends State<ProfileEdit> {
+
+  User user = AuthService.getCurrentUser();
+
   var avatarController = TextEditingController(text: AuthService.getCurrentUser().avatarURL);
   var collegeController = TextEditingController(text: AuthService.getCurrentUser().college);
   var departmentController = TextEditingController(text: AuthService.getCurrentUser().department);
@@ -219,7 +230,6 @@ class _ProfileEdit extends State<ProfileEdit> {
 
   @override
   Widget build(BuildContext context) {
-    User user = AuthService.getCurrentUser();
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Profile'),
@@ -362,7 +372,7 @@ class _ProfileEdit extends State<ProfileEdit> {
               )
             ),
 
-            FlatButton(
+            RaisedButton(
               color: Colors.orange,
               textColor: Colors.white,
               padding: EdgeInsets.all(10.0),
@@ -387,6 +397,9 @@ class _ProfileEdit extends State<ProfileEdit> {
                 }
 
                 UserService.updateUser(user);
+                Navigator.of(context).pushReplacement(FadePageRoute(
+                  builder: (context) => RootPage(),
+                ));
               },
               child: Text(
                 "Save Changes",

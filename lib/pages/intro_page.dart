@@ -3,6 +3,7 @@ import 'package:intro_slider/slide_object.dart';
 import 'package:flutter/material.dart';
 import 'package:impact/pages/root.dart';
 import 'package:impact/pages/routes.dart';
+import 'package:impact/pages/profile.dart';
 
 
 class IntroScreen extends StatefulWidget {
@@ -18,10 +19,13 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
+  bool newSignUp = false;
+
   void onDonePress() {
     // TODO: go to next screen
+    this.newSignUp = true;
     Navigator.of(context).pushReplacement(FadePageRoute(
-          builder: (context) => RootPage(),
+      builder: (context) => (newSignUp) ? ProfileEdit() : RootPage(),
     ));
   }
 
