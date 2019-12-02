@@ -11,6 +11,7 @@ import 'package:impact/models/request.dart';
 import 'package:impact/services/authentication.dart';
 import 'package:impact/services/user_service.dart';
 import 'package:impact/services/request_service.dart';
+import 'package:impact/pages/requests.dart';
 
 class CardDemo extends StatefulWidget {
   @override
@@ -153,31 +154,28 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
           elevation: 0.0,
           backgroundColor: new Color.fromRGBO(106, 94, 175, 1.0),
           centerTitle: true,
-//          leading: new Container(
-//            margin: const EdgeInsets.all(15.0),
-//            child: new Icon(
-//              Icons.equalizer,
-//              color: Colors.cyan,
-//              size: 30.0,
-//            ),
-//          ),
-//          actions: <Widget>[
-//            new GestureDetector(
-//              onTap: () {
-//                // Navigator.push(
-//                //     context,
-//                //     new MaterialPageRoute(
-//                //         builder: (context) => new PageMain()));
-//              },
-//              child: new Container(
-//                  margin: const EdgeInsets.all(15.0),
-//                  child: new Icon(
-//                    Icons.search,
-//                    color: Colors.cyan,
-//                    size: 30.0,
-//                  )),
-//            ),
-//          ],
+         leading: new Container(
+           margin: const EdgeInsets.all(15.0),
+           child: new Icon(
+             Icons.equalizer,
+             color: Colors.cyan,
+             size: 30.0,
+           ),
+         ),
+         actions: <Widget>[
+           new GestureDetector(
+             onTap: () {
+               Navigator.of(context).push(new MaterialPageRoute(builder: (context) => RequestsPage()));
+             },
+             child: new Container(
+                 margin: const EdgeInsets.all(15.0),
+                 child: new Icon(
+                   Icons.search,
+                   color: Colors.cyan,
+                   size: 30.0,
+                 )),
+           ),
+         ],
           title: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

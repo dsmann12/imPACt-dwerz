@@ -52,6 +52,21 @@ class RequestService {
     await Firestore.instance.runTransaction((Transaction tx) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('request')
         .where("mentor.id", isEqualTo: id)
+        .where("status", isEqualTo: 0)
+        .getDocuments();
+      List<DocumentSnapshot> documents = snapshot.documents;
+
+      requests = documents.map((documentSnapshot) => Request.fromSnapshot(documentSnapshot)).toList();
+    });
+
+    return requests;
+  }
+
+  static Future<List<Request>> getSentRequestsByUser(String id) async {
+    List<Request> requests;
+    await Firestore.instance.runTransaction((Transaction tx) async {
+      QuerySnapshot snapshot = await Firestore.instance.collection('request')
+        .where("mentee.id", isEqualTo: id)
         .getDocuments();
       List<DocumentSnapshot> documents = snapshot.documents;
 
