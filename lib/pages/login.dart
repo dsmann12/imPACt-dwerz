@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:impact/pages/home.dart';
-import 'home.dart';
-import 'users.dart';
 import 'routes.dart';
-import 'package:impact/pages/root.dart';
 import 'package:impact/services/authentication.dart';
+import 'package:impact/pages/intro_page.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -90,7 +86,7 @@ class LoginScreen extends StatelessWidget {
       },
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(FadePageRoute(
-          builder: (context) => RootPage(),
+          builder: (context) => IntroScreen(),
         ));
       },
 //      onRecoverPassword: (name) {
