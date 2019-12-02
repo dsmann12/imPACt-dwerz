@@ -5,10 +5,11 @@ import 'package:impact/models/request.dart';
 import 'dart:async';
 
 class RequestService {
+  final Duration timeout = const Duration(seconds: 30);
 
   static Future<Request> submitRequest(Request request) async {
     Map map = request.toMap();
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       request.reference = await Firestore.instance.collection('request').add(map);
     });
 
@@ -34,13 +35,13 @@ class RequestService {
   }
 
   static Future<void> removeRequest(Request request) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx,  {timeout}) async {
       await request.reference.delete();
     });    
   }
 
   static Future<Request> updateRequest(Request request) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       await request.reference.updateData(request.toMap());
     });
     
@@ -49,7 +50,7 @@ class RequestService {
 
   static Future<List<Request>> getRequestsByUser(String id) async {
     List<Request> requests;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('request')
         .where("mentor.id", isEqualTo: id)
         .where("status", isEqualTo: 0)
@@ -64,7 +65,7 @@ class RequestService {
 
   static Future<List<Request>> getSentRequestsByUser(String id) async {
     List<Request> requests;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('request')
         .where("mentee.id", isEqualTo: id)
         .getDocuments();

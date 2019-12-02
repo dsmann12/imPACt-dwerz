@@ -3,9 +3,10 @@ import 'package:impact/models/message.dart';
 import 'dart:async';
 
 class MessagingService {
+  final Duration timeout = const Duration(seconds: 30);
 
   static Future<Chat> getChat(Chat chat) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       chat = Chat.fromSnapshot(await chat.reference.get());
       chat.messages = await getMessages(chat);
     });
@@ -15,7 +16,7 @@ class MessagingService {
   static Future<Chat> addChat(Chat chat) async {
     Map map = chat.toMap();
 
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       chat.reference = await Firestore.instance.collection('chat').add(map);
       // await Firestore.instance.collection('chat').document(chat.reference.documentID).collection('message').document().setData({});
       // chat.messagesReference = Firestore.instance.collection('chat').document(chat.reference.documentID).collection('message');
@@ -29,7 +30,7 @@ class MessagingService {
   static Future<Message> addMessage(Message message) async {
     Map map = message.toMap();
 
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       message.reference = await Firestore.instance.collection('chat').document(message.chatReference.documentID).collection('message').add(map);
       // await Firestore.instance.collection('chat').document(chat.reference.documentID).collection('message').document().setData({});
     });
@@ -39,7 +40,7 @@ class MessagingService {
 
   static Future<List<Message>> getMessages(Chat chat) async {
     List<Message> messages;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await chat.reference.collection('message').orderBy('timestamp').getDocuments();
       messages = snapshot.documents.map((snapshot) => Message.fromSnapshot(snapshot)).toList();
       // await Firestore.instance.collection('chat').document(chat.reference.documentID).collection('message').document().setData({});
@@ -51,7 +52,7 @@ class MessagingService {
   static Future<List<Chat>> getChatsByUser(String id) async {
     List<Chat> chats;
 
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('chat').where("ids", arrayContains: id).getDocuments();
       List<DocumentSnapshot> documents = snapshot.documents;
       chats = documents.map((documentSnapshot) => Chat.fromSnapshot(documentSnapshot)).toList();
@@ -70,7 +71,7 @@ class MessagingService {
       Chat chat;
       List<Chat> chats;
 
-      await Firestore.instance.runTransaction((Transaction tx) async {
+      await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
         QuerySnapshot snapshot = await Firestore.instance.collection('chat')
             .where("ids", arrayContains: id1)
             .getDocuments();

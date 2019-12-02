@@ -3,10 +3,11 @@ import 'package:impact/models/post.dart';
 import 'dart:async';
 
 class PostService {
+  final Duration timeout = const Duration(seconds: 30);
 
   static Future<Post> addPost(Post post) async {
     Map map = post.toMap();
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       post.reference = await Firestore.instance.collection('post').add(map);
     });
 
@@ -26,7 +27,7 @@ class PostService {
   }
 
   static Future<Post> updatePost(Post post) async {
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       await post.reference.updateData(post.toMap());
     });
     
@@ -35,7 +36,7 @@ class PostService {
 
   static Future<List<Post>> getPosts(List<String> ids) async {
     List<Post> users;
-    await Firestore.instance.runTransaction((Transaction tx) async {
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       QuerySnapshot snapshot = await Firestore.instance.collection('post').where("userId", arrayContains: ids).getDocuments();
       List<DocumentSnapshot> documents = snapshot.documents;
 
