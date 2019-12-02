@@ -31,7 +31,6 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
   List selectedData = [];
   void initState() {
     super.initState();
-
     UserService.getMentors().then((users) {
       setState(() {
         mentors = users;
@@ -144,34 +143,36 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     timeDilation = 0.4;
 
-    double initialBottom = 15.0;
-    var dataLength = data.length;
+    double initialBottom = 10.0;
+    var dataLength = (mentors == null) ? 0 : mentors.length;
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = -10.0;
 
-    return (new Scaffold(
+    return (mentors == null) ? Center(child: CircularProgressIndicator(),) : Scaffold(
         appBar: new AppBar(
           elevation: 0.0,
-          backgroundColor: new Color.fromRGBO(106, 94, 175, 1.0),
+          // backgroundColor: new Color.fromRGBO(106, 94, 175, 1.0),
+          backgroundColor: Colors.white,
           centerTitle: true,
          leading: new Container(
-           margin: const EdgeInsets.all(15.0),
-           child: new Icon(
-             Icons.equalizer,
-             color: Colors.cyan,
-             size: 30.0,
+           margin: const EdgeInsets.only(bottom: 23, top: 5, left: 15, right: 15),
+           child: new IconButton(
+             icon: Icon(
+              Icons.contact_mail,
+              color: Colors.black,
+              size: 30.0,
+            ),
+            onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => RequestsPage())),
            ),
          ),
          actions: <Widget>[
            new GestureDetector(
-             onTap: () {
-               Navigator.of(context).push(new MaterialPageRoute(builder: (context) => RequestsPage()));
-             },
+             onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => RequestsPage())),
              child: new Container(
                  margin: const EdgeInsets.all(15.0),
                  child: new Icon(
                    Icons.search,
-                   color: Colors.cyan,
+                   color: Colors.black,
                    size: 30.0,
                  )),
            ),
@@ -182,29 +183,31 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
               new Text(
                 "Mentors",
                 style: new TextStyle(
-                    fontSize: 12.0,
-                    letterSpacing: 3.5,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 16.0,
+                    // letterSpacing: 3.5,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
-              new Container(
-                width: 15.0,
-                height: 15.0,
-                margin: new EdgeInsets.only(bottom: 20.0),
-                alignment: Alignment.center,
-                child: new Text(
-                  dataLength.toString(),
-                  style: new TextStyle(fontSize: 10.0),
-                ),
-                decoration: new BoxDecoration(
-                    color: Colors.red, shape: BoxShape.circle),
-              )
+              // new Container(
+              //   width: 15.0,
+              //   height: 15.0,
+              //   margin: new EdgeInsets.only(bottom: 20.0),
+              //   alignment: Alignment.center,
+              //   child: new Text(
+              //     dataLength.toString(),
+              //     style: new TextStyle(fontSize: 10.0),
+              //   ),
+              //   decoration: new BoxDecoration(
+              //       color: Colors.red, shape: BoxShape.circle),
+              // )
             ],
           ),
         ),
         body: new Container(
-          color: new Color.fromRGBO(106, 94, 175, 1.0),
+          // color: new Color.fromRGBO(106, 94, 175, 1.0),
+          color: Colors.white,
           alignment: Alignment.center,
-          child: dataLength > 0
+          child: ((mentors != null) && (mentors.length > 0))
               ? new Stack(
               alignment: AlignmentDirectional.center,
               children: (mentors == null) ? <Widget>[Center(child: CircularProgressIndicator(),)] : mentors.map((item) {
@@ -233,7 +236,8 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
                 }
               }).toList())
               : new Text("No Mentors Left to Swipe!",
-              style: new TextStyle(color: Colors.white, fontSize: 25)),
-        )));
+              style: new TextStyle(color: Colors.black, fontSize: 25)),
+        )
+      );
   }
 }
