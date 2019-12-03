@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart'; // for connecting to clou
 import 'package:impact/models/user.dart';
 import 'package:impact/services/user_service.dart';
 import 'package:impact/models/request.dart';
+import 'package:impact/models/post.dart';
+import 'package:impact/services/post_service.dart';
 import 'dart:async';
 
 class RequestService {
@@ -25,6 +27,14 @@ class RequestService {
     mentee.mentors.add(request.mentor.id);
     mentor = await UserService.updateUser(mentor);
     mentee = await UserService.updateUser(mentee);
+
+    List<Post> posts = await PostService.getPostsByUserId(request.mentor.id);
+    
+    for (int i = 0; i < posts.length; ++i) {
+      Post post = posts[i];
+      post.mentees = mentor.mentees;
+      PostService.updatePost(post);
+    }
     return request;
   }
 

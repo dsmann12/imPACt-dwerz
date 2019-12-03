@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:impact/services/post_service.dart'; 
 import 'package:intl/intl.dart';
 import 'package:impact/models/post.dart';
 import 'package:impact/services/authentication.dart';
@@ -40,6 +41,9 @@ class _HomePageState extends State<HomePage> {
                     child: ListView(
                       children: <Widget>[
                         TextField(
+                            controller: textEditingController,
+                            minLines: null,
+                            maxLines: null,
                             decoration: InputDecoration(labelText: "Write: "),
                             style: TextStyle(color: Colors.black)
                         ),
@@ -61,6 +65,8 @@ class _HomePageState extends State<HomePage> {
             );
           }
       );
+    } else {
+      return null;
     }
   }
 
@@ -69,9 +75,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
       elevation: 0.1,
-      backgroundColor: Color.fromRGBO(106, 94, 175, 1.0),
+      // backgroundColor: Color.fromRGBO(106, 94, 175, 1.0),
+      backgroundColor: Colors.deepPurple,
       title: Center(
-        child: Text("User Post Feed"),
+        child: Text("Mentor Post Feed"),
       ),
     );
     return Scaffold(
@@ -120,14 +127,28 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> onPost(String text) async {
     if (text.trim() != "") {
+      Post post = Post(
+        userId: user.id,
+        avatarURL: user.avatarURL,
+        body: text,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        institution: user.institution,
+        department: user.department,
+        user: "${user.firstName} ${user.lastName}",
+        mentees: user.mentees);
+      
+      PostService.addPost(post);
       textEditingController.clear();
     }
   }
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('post').orderBy(
-          'date', descending: true).snapshots(),
+      stream: Firestore.instance.collection('post')
+        .where("mentees", arrayContains: user.id)
+        .orderBy('date', descending: true)
+        .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -145,9 +166,14 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final post = Post.fromSnapshot(data);
+    
+    if (post.userId == user.id) {
+      return SizedBox.shrink();
+    }
+
     final format = DateFormat("MMMd");
     return Padding(
-        key: ValueKey(post.user),
+        key: ValueKey(post.reference.documentID),
         padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 1.0),
         child: Card(
             shape: RoundedRectangleBorder(
@@ -158,8 +184,8 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text(post.user, style: TextStyle(
+                  leading: (post.avatarURL != "") ? CircleAvatar(backgroundImage: NetworkImage(post.avatarURL)) :(Icons.account_circle),
+                  title: Text("${post.firstName} ${post.lastName}", style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20)),
                   trailing: Text(format.format(
                       DateTime.fromMillisecondsSinceEpoch(
