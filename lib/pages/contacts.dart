@@ -122,7 +122,11 @@ class _MentorListState extends State<MentorList>
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    AppBar(title: Text("Mentors"),),
+                    AppBar(
+                      title: Center(
+                        child: Text("Mentors"),
+                      ),
+                    ),
                     Column(
                       children: mentorsData.map((userItem) => _buildListItem(userItem)).toList(),
                     )
@@ -131,7 +135,11 @@ class _MentorListState extends State<MentorList>
               // ),
                 (!currentUser.isMentor() || menteesData?.length == 0) ? SizedBox.shrink() : Column(
                   children: <Widget>[
-                    AppBar(title: Text("Mentees"),),
+                    AppBar(
+                      title: Center(
+                        child: Text("Mentees"),
+                      ),
+                    ),
                     Column(
                       children: menteesData.map((userItem) => _buildListItem(userItem)).toList(),
                     ),
