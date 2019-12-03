@@ -51,9 +51,9 @@ Positioned cardDemoDummy(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
-                  Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.white, fontSize: 20),),
-                  Text(user.institution, style: TextStyle(color: Colors.white, fontSize: 20),),
-                  Text(user.department, style: TextStyle(color: Colors.white, fontSize: 20),),
+                  Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+                  Text(user.institution, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text(user.department, style: TextStyle(color: Colors.white, fontSize: 16),),
                 ]
               )
             ),

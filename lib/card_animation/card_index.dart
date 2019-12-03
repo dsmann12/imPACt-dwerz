@@ -152,14 +152,15 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
         appBar: new AppBar(
           elevation: 0.0,
           // backgroundColor: new Color.fromRGBO(106, 94, 175, 1.0),
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
+          backgroundColor: Colors.deepPurple,
           centerTitle: true,
          leading: new Container(
            margin: const EdgeInsets.only(bottom: 23, top: 5, left: 15, right: 15),
            child: new IconButton(
              icon: Icon(
               Icons.contact_mail,
-              color: Colors.black,
+              color: Colors.white,
               size: 30.0,
             ),
             onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => RequestsPage())),
@@ -172,7 +173,7 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
                  margin: const EdgeInsets.all(15.0),
                  child: new Icon(
                    Icons.search,
-                   color: Colors.black,
+                   color: Colors.white,
                    size: 30.0,
                  )),
            ),
@@ -186,7 +187,7 @@ class CardDemoState extends State<CardDemo> with TickerProviderStateMixin {
                     fontSize: 16.0,
                     // letterSpacing: 3.5,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: Colors.white),
               ),
               // new Container(
               //   width: 15.0,
