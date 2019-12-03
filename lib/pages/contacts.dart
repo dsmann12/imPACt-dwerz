@@ -37,8 +37,8 @@ class _MentorListState extends State<MentorList>
   //   ItemModel(header: 'Golden Richard'),
   // ];
   
-  List<ItemModel> mentorsData;
-  List<ItemModel> menteesData;
+  List<ItemModel> mentorsData = [];
+  List<ItemModel> menteesData = [];
   final User currentUser = AuthService.getCurrentUser();
 
   showAlertDialog(BuildContext context)
@@ -112,7 +112,7 @@ class _MentorListState extends State<MentorList>
       });
     }
 
-    return (mentorsData == null || (currentUser.isMentor() && (menteesData == null))) ? Center(child: CircularProgressIndicator(),) : 
+    return (mentorsData == null || (currentUser.isMentor() && (menteesData == null))) ? Center(child: CircularProgressIndicator(),) :
     Scaffold(
       body: Container(
         child: Column(
