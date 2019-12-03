@@ -4,6 +4,7 @@ import 'package:impact/services/messaging_service.dart';
 import 'package:impact/services/authentication.dart';
 import 'package:impact/models/user.dart';
 import 'package:impact/pages/chat.dart';
+import 'package:intl/intl.dart';
 
 class MessagesPage extends StatefulWidget
 {
@@ -13,6 +14,7 @@ class MessagesPage extends StatefulWidget
 
 class _MessagesPageState extends State<MessagesPage>
 {
+  final format = DateFormat("MMMd");
   User user = AuthService.getCurrentUser();
   List<Chat> chats;
 
@@ -24,7 +26,7 @@ class _MessagesPageState extends State<MessagesPage>
       });
     });
 
-    return (chats == null) ? Center(child: CircularProgressIndicator()) : ListView.builder(
+    return (chats == null) ? Center(child: CircularProgressIndicator()) : (chats.length == 0)? Center(child: Text("You do not have any chats")) : ListView.builder(
           itemBuilder: (BuildContext context, int position) {
             Chat chat = chats[position];
             String id = chat.ids.where((val) => val != user.id).toList()[0];
@@ -50,7 +52,9 @@ class _MessagesPageState extends State<MessagesPage>
                                 fontWeight: FontWeight.bold),
                           ),
                           new Text(
-                            'Nov 29',
+                            format.format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                chats[position].messages[chats[position].messages.length - 1].timestamp.seconds * 1000)),
                             style: new TextStyle(
                                 color: Colors.grey, fontSize: 14.0),
                           ),

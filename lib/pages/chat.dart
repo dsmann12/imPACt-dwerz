@@ -124,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
                     alignment: Alignment.bottomRight,
                     child: IconButton(
                       icon: Icon(Icons.send),
-                      onPressed: () async => onSend(textEditingController.text),
+                      onPressed: (textEditingController.text == "") ? null : () async => onSend(textEditingController.text),
                     )
                   )
                 ],
