@@ -34,15 +34,17 @@ class PostService {
     return post;
   }
 
-  static Future<List<Post>> getPosts(List<String> ids) async {
-    List<Post> users;
-    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
-      QuerySnapshot snapshot = await Firestore.instance.collection('post').where("userId", arrayContains: ids).getDocuments();
-      List<DocumentSnapshot> documents = snapshot.documents;
+  static Future<List<Post>> getPosts(String id) async {
+    List<Post> posts;
 
-      users = documents.map((documentSnapshot) => Post.fromSnapshot(documentSnapshot)).toList();
+    await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
+      QuerySnapshot snapshot = await Firestore.instance.collection('post')
+        .where("userId", isEqualTo: id)
+        .getDocuments();
+      List<DocumentSnapshot> documents = snapshot.documents;
+      posts = documents.map((documentSnapshot) => Post.fromSnapshot(documentSnapshot)).toList();
     });
 
-    return users;
+    return posts;
   }
 }

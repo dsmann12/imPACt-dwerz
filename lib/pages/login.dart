@@ -7,7 +7,6 @@ import 'package:impact/pages/intro_page.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
-  bool newSignUp = false;
 
   //Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
 
@@ -75,7 +74,6 @@ class LoginScreen extends StatelessWidget {
         print('Login info');
         print('Name: ${loginData.name}');
         print('Password: ${loginData.password}');
-        this.newSignUp = false;
         // return _loginUser(loginData);
         return AuthService.signIn(loginData.name, loginData.password);
       },
@@ -83,14 +81,14 @@ class LoginScreen extends StatelessWidget {
         print('Signup info');
         print('Name: ${loginData.name}');
         print('Password: ${loginData.password}');
-        this.newSignUp = true;
         // return _loginUser(loginData);
         // return _signUpUser(loginData);
         return AuthService.signUp(loginData.name, loginData.password);
       },
       onSubmitAnimationCompleted: () {
+        print(AuthService.newSignUp);
         Navigator.of(context).pushReplacement(FadePageRoute(
-          builder: (context) => (newSignUp) ? IntroScreen() : RootPage(),
+          builder: (context) => (AuthService.newSignUp) ? IntroScreen() : RootPage(),
         ));
       },
 //      onRecoverPassword: (name) {

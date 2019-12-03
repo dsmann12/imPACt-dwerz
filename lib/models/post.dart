@@ -11,6 +11,7 @@ class Post {
   String department;
   String avatarURL;
   int type;
+  List<String> mentees;
   DocumentReference reference;
 
   Post({
@@ -22,13 +23,15 @@ class Post {
     this.institution = "",
     this.department = "",
     this.avatarURL = "",
-    this.type = 0
+    this.type = 0,
+    this.mentees,
   }) {
     this.date = Timestamp.now();
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
+      "userId": this.userId,
       "user": this.user,
       "body": this.body,
       "date": this.date,
@@ -37,7 +40,8 @@ class Post {
       "institution": this.institution,
       "department": this.department,
       "avatarURL": this.avatarURL,
-      "type": this.type
+      "type": this.type,
+      "mentees": this.mentees,
     };
 
     return map;
@@ -54,6 +58,7 @@ class Post {
       assert(map['department'] != null),
       assert(map['avatarURL'] != null),
       assert(map['type'] != null),
+      assert(map['mentees'] != null),
       body = map['body'],
       date = map['date'],
       user = map['user'],
@@ -63,7 +68,8 @@ class Post {
       institution = map['institution'],
       department = map['department'],
       avatarURL = map['avatarURL'],
-      type = map['type'];
+      type = map['type'],
+      mentees = List.from(map['mentees']);
 
   Post.fromSnapshot(DocumentSnapshot snapshot)
     : this.fromMap(snapshot.data, reference: snapshot.reference);

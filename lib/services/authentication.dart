@@ -16,6 +16,7 @@ enum AuthStatus {
 class AuthService {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   static User currentUser;
+  static bool newSignUp = false;
 
   // static Future<List<User>> createUsers() async {
   //   List<User> users = [
@@ -361,6 +362,7 @@ class AuthService {
 
         //  List<User> users = await createUsers();
         //  User var_user = currentUser;
+         newSignUp = false;
          return null;
        }
     } catch (exception) {
@@ -381,6 +383,7 @@ class AuthService {
        } else { 
          currentUser = User(id: user.uid, email: email, role: 0);
          currentUser = await UserService.addUser(currentUser);
+         newSignUp = true;
          return null;
        }
     } catch (exception) {

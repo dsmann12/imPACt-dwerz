@@ -19,8 +19,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
   Widget labelTag()
   {
     return (user.isMentor()) ?
-        Chip(backgroundColor: Colors.deepOrange, label: Text('Mentor')) :
-        Chip(backgroundColor: Colors.deepPurple, label: Text('Mentee'));
+        Chip(backgroundColor: Colors.deepPurple, label: Text('Mentor', style: TextStyle(color: Colors.white),)) :
+        Chip(backgroundColor: Colors.amber[900], label: Text('Mentee', style: TextStyle(color: Colors.white)));
   }
 
   Widget majorOrDepartment()

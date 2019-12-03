@@ -118,35 +118,35 @@ class _MentorListState extends State<MentorList>
         child: Column(
           children: <Widget>[
             Expanded(
-              child: ListView(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    AppBar(
-                      title: Center(
-                        child: Text("Mentors"),
+              child: (mentorsData.length == 0 && menteesData.length == 0) ? Center(child: Text("You do not have any mentors or mentees"),) : ListView(
+                children: <Widget>[
+                  (mentorsData.length == 0) ? SizedBox.shrink() : Column(
+                    children: <Widget>[
+                      AppBar(
+                        title: Center(
+                          child: Text("Mentors"),
+                        ),
                       ),
-                    ),
-                    Column(
-                      children: mentorsData.map((userItem) => _buildListItem(userItem)).toList(),
-                    )
-                  ],
-                ),
-              // ),
-                (!currentUser.isMentor() || menteesData?.length == 0) ? SizedBox.shrink() : Column(
-                  children: <Widget>[
-                    AppBar(
-                      title: Center(
-                        child: Text("Mentees"),
+                      Column(
+                        children: mentorsData.map((userItem) => _buildListItem(userItem)).toList(),
+                      )
+                    ],
+                  ),
+                // ),
+                  (!currentUser.isMentor() || menteesData?.length == 0) ? SizedBox.shrink() : (menteesData.length == 0) ? Center(child: Text("You do not have any mentees")) : Column(
+                    children: <Widget>[
+                      AppBar(
+                        title: Center(
+                          child: Text("Mentees"),
+                        ),
                       ),
-                    ),
-                    Column(
-                      children: menteesData.map((userItem) => _buildListItem(userItem)).toList(),
-                    ),
-                  ],
-                )
-              ],
-            ),
+                      Column(
+                        children: menteesData.map((userItem) => _buildListItem(userItem)).toList(),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
             // )
           ],
