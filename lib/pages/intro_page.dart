@@ -32,14 +32,14 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
-      color: Colors.deepOrange,
+      color: Colors.white,
     );
   }
 
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
-      color: Colors.deepOrange,
+      color: Colors.white,
       size: 35.0,
     );
   }
@@ -47,7 +47,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget renderSkipBtn() {
     return Icon(
       Icons.skip_next,
-      color: Colors.deepOrange,
+      color: Colors.white,
     );
   }
 
@@ -107,8 +107,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
       // Skip button
       renderSkipBtn: this.renderSkipBtn(),
-      colorSkipBtn: Colors.amber,
-      highlightColorSkipBtn: Colors.amberAccent,
+      colorSkipBtn: Colors.deepPurple,
+      highlightColorSkipBtn: Colors.deepPurple,
 
       // Next button
       renderNextBtn: this.renderNextBtn(),
@@ -116,8 +116,8 @@ class _IntroScreenState extends State<IntroScreen> {
       // Done button
       renderDoneBtn: this.renderDoneBtn(),
       onDonePress: this.onDonePress,
-      colorDoneBtn: Colors.amber,
-      highlightColorDoneBtn: Colors.amberAccent,
+      colorDoneBtn: Colors.deepPurple,
+      highlightColorDoneBtn: Colors.deepPurple,
 
       // Dot indicator
       colorDot: Colors.white,
