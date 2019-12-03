@@ -67,7 +67,7 @@ class _IntroScreenState extends State<IntroScreen> {
     slides.add(
       new Slide(
         title: "ABOUT",
-        description: "Our mission is to have all Mentors and Mentees to network and help provide the necessary training.",
+        description: "Our mission is to have allows students to network with researchers and university faculty as mentees",
         pathImage: "assets/college-png-10.png",
         backgroundColor: Colors.deepPurple,
       ),
@@ -75,7 +75,7 @@ class _IntroScreenState extends State<IntroScreen> {
     slides.add(
       new Slide(
         title: "GOOD LUCK",
-        description: "Remember, network with as many as you can so that you can gain and provide the needed experience in your preferred field.",
+        description: "Remember, network with as many mentors and mentees as you can so that you can gain and provide the needed experience in your preferred field.",
         pathImage: "assets/Hands.png",
         backgroundColor: Colors.deepPurple,
       ),
