@@ -25,14 +25,15 @@ class _RequestsPageState extends State<RequestsPage>
   @override
   void initState() {
     super.initState();
-    
+    RequestService.getRequestsByUser(user.id).then((requests) => setState(() {this.requests = requests;}));
+    RequestService.getSentRequestsByUser(user.id).then((sentRequests) => setState(() {this.sentRequests = sentRequests;}));
     
   }
 
   @override
   Widget build(BuildContext context) {
-    RequestService.getRequestsByUser(user.id).then((requests) => setState(() {this.requests = requests;}));
-    RequestService.getSentRequestsByUser(user.id).then((sentRequests) => setState(() {this.sentRequests = sentRequests;}));
+//    RequestService.getRequestsByUser(user.id).then((requests) => setState(() {this.requests = requests;}));
+//    RequestService.getSentRequestsByUser(user.id).then((sentRequests) => setState(() {this.sentRequests = sentRequests;}));
     if (this.sentRequests == null || (user.isMentor() && this.requests == null)) {
       return Center(child: CircularProgressIndicator(),);
     }
@@ -192,7 +193,7 @@ class _RequestsPageState extends State<RequestsPage>
           )
         )
       ),
-      onDismissed: (direction) => setState(() {requests.remove(request); RequestService.removeRequest(request);}),
+      onDismissed: (direction) async { await RequestService.removeRequest(request); setState(() async {this.sentRequests.remove(request); this.sentRequests = await RequestService.getSentRequestsByUser(user.id);});},
       direction: DismissDirection.endToStart,
       child: GestureDetector( 
         child: Padding(
