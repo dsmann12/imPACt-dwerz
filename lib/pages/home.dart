@@ -18,13 +18,13 @@ class _HomePageState extends State<HomePage> {
 
   final TextEditingController textEditingController = TextEditingController();
 
-
   User user = AuthService.getCurrentUser();
-
+  // widget establishing the "create a post button" behind mentor status
   Widget onlyMentorCanPost() {
     if (user.isMentor()) {
       return FloatingActionButton(
           child: Icon(Icons.add_circle_outline),
+          // outlining the parameters for the popup text box to create a post
           onPressed: () {
             showDialog(
               context: context,
@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
             );
           }
       );
+    // create a post button does not show if not a mentor
     } else {
       return null;
     }
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // parameters for the Mentor Post Feed bar at the top
     final topAppBar = AppBar(
       elevation: 0.1,
       backgroundColor: Colors.deepPurple,
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
+  // pulling the user info from the database
   Future<void> onPost(String text) async {
     if (text.trim() != "") {
       Post post = Post(
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
       textEditingController.clear();
     }
   }
-
+  // populating feed with posts by users who have you as a mentee
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('post')
@@ -119,14 +121,14 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
+  // builds the feed by mapping the database information to the specified display parameters
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     return ListView(
       padding: const EdgeInsets.only(top: 10.0),
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
   }
-
+  // widget specifying the build of cards that make up the feed
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final post = Post.fromSnapshot(data);
     
