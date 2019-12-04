@@ -8,47 +8,6 @@ import 'package:impact/pages/intro_page.dart';
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
 
-  //Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
-
-  // Future<String> _loginUser(LoginData data) {
-  //   // return Future.delayed(loginTime).then((_) {
-  //   //   if (!mockUsers.containsKey(data.name)) {
-  //   //     return 'Username not exists';
-  //   //   }
-  //   //   if (mockUsers[data.name] != data.password) {
-  //   //     return 'Password does not match';
-  //   //   }
-  //   //   return null;
-  //   // });
-  //   return AuthService.signIn(data.name, data.password).then((value) {
-  //     return value;
-  //   });
-  // }
-
-  // Future<String> _signUpUser(LoginData data) {
-  //   // return Future.delayed(loginTime).then((_) {
-  //   //   if (!mockUsers.containsKey(data.name)) {
-  //   //     return 'Username not exists';
-  //   //   }
-  //   //   if (mockUsers[data.name] != data.password) {
-  //   //     return 'Password does not match';
-  //   //   }
-  //   //   return null;
-  //   // });
-  //   return AuthService.signUp(data.name, data.password).then((value) {
-  //     return value;
-  //   });
-  // }
-
-//  Future<String> _recoverPassword(String name) {
-//    return Future.delayed(loginTime).then((_) {
-//      if (!mockUsers.containsKey(name)) {
-//        return 'Username not exists';
-//      }
-//      return null;
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
     final inputBorder = BorderRadius.vertical(
@@ -74,15 +33,13 @@ class LoginScreen extends StatelessWidget {
         print('Login info');
         print('Name: ${loginData.name}');
         print('Password: ${loginData.password}');
-        // return _loginUser(loginData);
         return AuthService.signIn(loginData.name, loginData.password);
       },
       onSignup: (loginData) {
         print('Signup info');
         print('Name: ${loginData.name}');
         print('Password: ${loginData.password}');
-        // return _loginUser(loginData);
-        // return _signUpUser(loginData);
+
         return AuthService.signUp(loginData.name, loginData.password);
       },
       onSubmitAnimationCompleted: () {
@@ -91,12 +48,6 @@ class LoginScreen extends StatelessWidget {
           builder: (context) => (AuthService.newSignUp) ? IntroScreen() : RootPage(),
         ));
       },
-//      onRecoverPassword: (name) {
-//        print('Recover password info');
-//        print('Name: $name');
-//        return _recoverPassword(name);
-//        // Show new password dialog
-//      },
     );
   }
 }

@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
       elevation: 0.1,
-      // backgroundColor: Color.fromRGBO(106, 94, 175, 1.0),
       backgroundColor: Colors.deepPurple,
       title: Center(
         child: Text("Mentor Post Feed"),
@@ -85,42 +84,6 @@ class _HomePageState extends State<HomePage> {
       appBar: topAppBar,
       body: _buildBody(context),
       floatingActionButton: onlyMentorCanPost(),
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(Icons.add_circle_outline),
-//        onPressed: () {
-//          showDialog(
-//            context: context,
-//            builder: (BuildContext context) {
-//              return AlertDialog(
-//                title: Center(
-//                  child: Text("Create A Post", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
-//                  ),
-//                ),
-//                content: Container(
-//                  height: 120.0,
-//                  width: 100.0,
-//                  child: ListView(
-//                    children: <Widget>[
-//                      TextField(
-//                        decoration: InputDecoration(labelText: "Write: "),
-//                        style: TextStyle(color: Colors.black)
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//                actions: <Widget>[
-//                  new FlatButton(
-//                    onPressed: () {
-//                      Navigator.of(context).pop();
-//                    },
-//                    child: const Text("Submit", style: TextStyle(color: Colors.black))
-//                  )
-//                ],
-//              );
-//            },
-//          );
-//        }
-//      ),
     );
   }
 

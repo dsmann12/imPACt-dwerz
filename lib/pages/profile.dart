@@ -69,14 +69,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         width: 150.0,
                         height: 150.0,
                         decoration: BoxDecoration(
-//                            color: Colors.red,
                             image: DecorationImage(
                                 image: displayProfilePic(),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
-//                            boxShadow: [
-//                              BoxShadow(blurRadius: 7.0, color: Colors.black)
-//                        ]
+
                             )),
                     ])),
             Container(
@@ -108,7 +105,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           fontFamily: 'Montserrat'),
                       textAlign: TextAlign.center,
                     ),
-                    //SizedBox(height: 5.0),
 
                     Text(
                       user.college,
@@ -149,59 +145,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
                   ],
                 )),
-//                    Column(
-//                      children: <Widget>[
-//                        Text(
-//                          user.firstName + " " + user.lastName,
-//                          style: TextStyle(
-//                              fontSize: 30.0,
-//                              fontWeight: FontWeight.bold,
-//                              fontFamily: 'Montserrat'),
-//                        ),
-//                        //SizedBox(height: 15.0),
-//                        labelTag(),
-//                        Text(
-//                          user.institution,
-//                          style: TextStyle(
-//                              fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                              fontFamily: 'Montserrat'),
-//                        ),
-//                        //SizedBox(height: 5.0),
-//
-//                        Text(
-//                          user.major,
-//                          style: TextStyle(
-//                              fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                              fontFamily: 'Montserrat'),
-//                        ),
-//
-//                        Text(
-//                          user.college,
-//                          style: TextStyle(
-//                              fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                              fontFamily: 'Montserrat'),
-//                        ),
-//
-//                        Text(
-//                          user.department.toString(),
-//                          style: TextStyle(
-//                              fontSize: 15.0,
-////                          fontStyle: FontStyle.italic,
-//                              fontFamily: 'Montserrat'),
-//                        ),
-//
-////                        Text(
-////                          'Research Interest(s): '
-////                              'Software Development, '
-////                              ' Mobile Application Development, '
-////                              ' Web Application Development, '
-////                              ' Mobile and Web Security ',
-////                          style: TextStyle(
-////                              fontSize: 15.0,
-
           ],
 
         ),
@@ -224,7 +167,6 @@ class _ProfileEdit extends State<ProfileEdit> {
   var firstnameController = TextEditingController(text: AuthService.getCurrentUser().firstName);
   var lastnameController = TextEditingController(text: AuthService.getCurrentUser().lastName);
   var institutionController = TextEditingController(text: AuthService.getCurrentUser().institution);
-  // var interestsController = TextEditingController(text: AuthService.getCurrentUser().interests.toString());
   var majorController = TextEditingController(text: AuthService.getCurrentUser().major);
   bool roleChecked = (AuthService.getCurrentUser().isMentor());
 
@@ -238,11 +180,6 @@ class _ProfileEdit extends State<ProfileEdit> {
         padding: new EdgeInsets.all(10.0),
         child: new ListView(
           children: <Widget>[
-            // Text(
-            //   "filler",
-            //   style: TextStyle(fontSize: 300)
-            // ),
-
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: TextFormField(
@@ -347,18 +284,6 @@ class _ProfileEdit extends State<ProfileEdit> {
                 ),
               )
             ),
-
-            // TextFormField(
-            //   controller: interestsController,
-            //   decoration: InputDecoration(
-            //     labelText: 'Interests',
-            //     border: new OutlineInputBorder(
-            //       borderRadius: new BorderRadius.circular(25.0),
-            //       borderSide: new BorderSide(),
-            //     ),
-            //   ),
-            // ),
-
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: CheckboxListTile (
@@ -389,7 +314,6 @@ class _ProfileEdit extends State<ProfileEdit> {
                 user.firstName = firstnameController.text;
                 user.lastName = lastnameController.text;
                 
-                // user.interests = interestsController; 
                 if(roleChecked) {
                   user.role = 1;
                 } else {

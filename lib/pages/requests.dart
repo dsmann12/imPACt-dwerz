@@ -20,8 +20,7 @@ class _RequestsPageState extends State<RequestsPage>
   List<Request> sentRequests;
   Map<int, Color> colors = {0: Colors.black, 1: Colors.green, 2: Colors.red};
   Map<int, String> status = {0: "Submitted", 1: "Accepted", 2: "Denied"};
-  // TabController tabController = TabController(length: 2, vsync: );
-
+  
   @override
   void initState() {
     super.initState();
@@ -32,8 +31,6 @@ class _RequestsPageState extends State<RequestsPage>
 
   @override
   Widget build(BuildContext context) {
-//    RequestService.getRequestsByUser(user.id).then((requests) => setState(() {this.requests = requests;}));
-//    RequestService.getSentRequestsByUser(user.id).then((sentRequests) => setState(() {this.sentRequests = sentRequests;}));
     if (this.sentRequests == null || (user.isMentor() && this.requests == null)) {
       return Center(child: CircularProgressIndicator(),);
     }
@@ -69,7 +66,6 @@ class _RequestsPageState extends State<RequestsPage>
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          // title: Center(child: Text("imPACt")),
           title: Text("imPACt"),
           centerTitle: true,
           bottom: TabBar(
@@ -122,7 +118,6 @@ class _RequestsPageState extends State<RequestsPage>
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         child: new Card(
             elevation: 1.0,
-            // color: const Color(0xFFFFFFFF),
             color: Colors.white,
             child: new ListTile(
               leading: new CircleAvatar(
@@ -132,7 +127,6 @@ class _RequestsPageState extends State<RequestsPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    // ChatMockData[position].name,
                     "${request.mentee.firstName} ${request.mentee.lastName} ",
                     style: new TextStyle(
                         fontWeight: FontWeight.bold),
@@ -166,7 +160,6 @@ class _RequestsPageState extends State<RequestsPage>
               subtitle: new Container(
                 padding: const EdgeInsets.only(top: 5.0),
                 child: new Text(
-                  // ChatMockData[position].message,
                   "${request.mentee.institution}\n${request.mentee.department}",
                   style: new TextStyle(
                       color: Colors.grey, fontSize: 15.0),
@@ -193,59 +186,27 @@ class _RequestsPageState extends State<RequestsPage>
           )
         )
       ),
-      onDismissed: (direction) async { await RequestService.removeRequest(request); setState(() async {this.sentRequests.remove(request); this.sentRequests = await RequestService.getSentRequestsByUser(user.id);});},
+      onDismissed: (direction) async { await RequestService.removeRequest(request); setState(() {this.sentRequests.remove(request);});},
       direction: DismissDirection.endToStart,
       child: GestureDetector( 
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: new Card(
               elevation: 1.0,
-              // color: const Color(0xFFFFFFFF),
               color: Colors.white,
               child: new ListTile(
                 leading: new CircleAvatar(
                   backgroundImage: new NetworkImage(request.mentor.avatarURL),
                 ),
-                // title: new Column(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: <Widget>[
                 title:   Text(
-                      // ChatMockData[position].name,
                       "${request.mentor.firstName} ${request.mentor.lastName} ",
                       style: new TextStyle(
                           fontWeight: FontWeight.bold),
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: <Widget>[
-                    //     Expanded(
-                    //       child: RaisedButton(
-                    //         color: Colors.deepPurple,
-                    //         textColor: Colors.white,
-                    //         onPressed: () => RequestService.acceptRequest(request),
-                    //         child: Text("Accept")
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       child: Padding(
-                    //         padding: EdgeInsets.only(left: 10),
-                    //         child: RaisedButton(
-                    //           color: Colors.red,
-                    //           textColor: Colors.white,
-                    //           onPressed: () => RequestService.denyRequest(request),
-                    //           child: Text("Deny")
-                    //         )
-                    //       )
-                    //     )
-                    //   ]
-                    // ),
-                  // ],
-                // ),
                 trailing: Text(status[request.status], style: TextStyle(color: colors[request.status])),
                 subtitle: new Container(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: new Text(
-                    // ChatMockData[position].message,
                     "${request.mentor.institution}\n${request.mentor.department}",
                     style: new TextStyle(
                         color: Colors.grey, fontSize: 15.0),
