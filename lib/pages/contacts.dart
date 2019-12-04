@@ -10,17 +10,9 @@ import 'package:impact/pages/chat.dart';
 class ItemModel {
   bool isExpanded;
   User user;
-  //BodyModel bodyModel;
-
+  
   ItemModel({this.isExpanded: false, this.user});
 }
-
-//class BodyModel {
-//  int price;
-//  int quantity;
-//
-//  BodyModel({this.price, this.quantity});
-//}
 
 class MentorList extends StatefulWidget
 {
@@ -28,17 +20,9 @@ class MentorList extends StatefulWidget
   _MentorListState createState() => _MentorListState();
 }
 
-class _MentorListState extends State<MentorList>
-{
-  // List<ItemModel> prepareData = <ItemModel>[
-  //   ItemModel(header: 'Anas Nash Mahmoud'),
-  //   ItemModel(header: 'Chen Wang'),
-  //   ItemModel(header: 'Qingyang Wang'),
-  //   ItemModel(header: 'Golden Richard'),
-  // ];
-  
-  List<ItemModel> mentorsData = [];
-  List<ItemModel> menteesData = [];
+class _MentorListState extends State<MentorList> { 
+  List<ItemModel> mentorsData;
+  List<ItemModel> menteesData;
   final User currentUser = AuthService.getCurrentUser();
 
   showAlertDialog(BuildContext context)
@@ -118,7 +102,7 @@ class _MentorListState extends State<MentorList>
         child: Column(
           children: <Widget>[
             Expanded(
-              child: (mentorsData.length == 0 && menteesData.length == 0) ? Center(child: Text("You do not have any mentors or mentees"),) : ListView(
+              child: (mentorsData?.length == 0 && (menteesData == null || menteesData?.length == 0)) ? Center(child: Text("You do not have any mentors or mentees"),) : ListView(
                 children: <Widget>[
                   (mentorsData.length == 0) ? SizedBox.shrink() : Column(
                     children: <Widget>[
@@ -133,7 +117,7 @@ class _MentorListState extends State<MentorList>
                     ],
                   ),
                 // ),
-                  (!currentUser.isMentor() || menteesData?.length == 0) ? SizedBox.shrink() : (menteesData.length == 0) ? Center(child: Text("You do not have any mentees")) : Column(
+                  (!currentUser.isMentor() || (menteesData == null || menteesData?.length == 0)) ? SizedBox.shrink() : (menteesData.length == 0) ? Center(child: Text("You do not have any mentees")) : Column(
                     children: <Widget>[
                       AppBar(
                         title: Center(
@@ -152,101 +136,6 @@ class _MentorListState extends State<MentorList>
           ],
         ),
       ),
-//         child: (data == null) ? Center(child: CircularProgressIndicator()) : ListView.builder(
-//           itemCount: data?.length,
-//           itemBuilder: (BuildContext context, int index) {
-//             ItemModel item = (data == null) ? null : data[index];
-//             return ExpansionPanelList(
-//               animationDuration: Duration(milliseconds: 500),
-//               children: [
-//                 ExpansionPanel(
-//                   canTapOnHeader: true,
-//                   body: Container(
-//                     padding: EdgeInsets.all(10),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: <Widget>[
-// //                        Text(
-// //                          'PRICE: ${prepareData[index].bodyModel.price}',
-// //                          style: TextStyle(
-// //                            color: Colors.grey[700],
-// //                            fontSize: 18,
-// //                          ),
-// //                        ),
-//                         IconButton(
-//                           icon: Icon(Icons.message),
-//                           onPressed: () async {
-
-//                             Chat chat = await MessagingService.getChatBetweenUsers(currentUser.id, item.user.id);
-//                             if (chat == null) {
-//                               chat = Chat();
-//                               chat.ids.add(currentUser.id);
-//                               chat.ids.add(item.user.id);
-//                               chat.users[currentUser.id] = {
-//                                 "avatarURL": currentUser.avatarURL,
-//                                 "firstName": currentUser.firstName,
-//                                 "lastName": currentUser.lastName,
-//                               }.cast<String, dynamic>();
-//                               chat.users[item.user.id] = {
-//                                 "avatarURL": item.user.avatarURL,
-//                                 "firstName": item.user.firstName,
-//                                 "lastName": item.user.lastName,
-//                               }.cast<String, dynamic>();
-//                             }
-                            
-//                             Navigator.of(context).push(new MaterialPageRoute(builder: (context) => ChatPage(currentUser, chat)));
-//                           },
-//                         ),
-// //                        Text(
-// //                          'QUANTITY: ${prepareData[index].bodyModel.quantity}',
-// //                          style: TextStyle(
-// //                            color: Colors.grey[700],
-// //                            fontSize: 18,
-// //                          ),
-// //                        )
-//                        IconButton(
-//                          icon: Icon(Icons.info),
-//                          onPressed: () {
-                           
-//                          },
-//                        )
-//                       ],
-//                     ),
-//                   ),
-//                   headerBuilder: (BuildContext context, bool isExpanded) {
-//                     return Container(
-//                       padding: EdgeInsets.all(10),
-//                       child: Row(
-//                         children: <Widget>[
-//                           CircleAvatar(
-//                             backgroundImage: NetworkImage(item.user.avatarURL),
-//                           ),
-//                           Padding(
-//                             padding: EdgeInsets.only(left: 10),
-//                             child: Text(
-//                               "${item.user.firstName} ${item.user.lastName}",
-//                               style: TextStyle(
-//                                 color: Colors.black54,
-//                                 fontSize: 18,
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       ) 
-//                     );
-//                   },
-//                   isExpanded: (item == null) ? false : item.isExpanded,
-//                 )
-//               ],
-//               expansionCallback: (int position, bool status) {
-//                 setState(() {
-//                   item.isExpanded =
-//                   !item.isExpanded;
-//                 });
-//               },
-//             );
-//           },
-//         ),
     );
   }
 
@@ -267,13 +156,6 @@ class _MentorListState extends State<MentorList>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-//                        Text(
-//                          'PRICE: ${prepareData[index].bodyModel.price}',
-//                          style: TextStyle(
-//                            color: Colors.grey[700],
-//                            fontSize: 18,
-//                          ),
-//                        ),
                 IconButton(
                   icon: Icon(Icons.message),
                   onPressed: () async {
@@ -298,13 +180,6 @@ class _MentorListState extends State<MentorList>
                     Navigator.of(context).push(new MaterialPageRoute(builder: (context) => ChatPage(currentUser, chat)));
                   },
                 ),
-//                        Text(
-//                          'QUANTITY: ${prepareData[index].bodyModel.quantity}',
-//                          style: TextStyle(
-//                            color: Colors.grey[700],
-//                            fontSize: 18,
-//                          ),
-//                        )
                 IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {

@@ -12,12 +12,9 @@ Positioned cardDemoDummy(
     double skew,
     BuildContext context) {
   Size screenSize = MediaQuery.of(context).size;
-  // Size screenSize=(500.0,200.0);
-  // print("dummyCard");
+  
   return new Positioned(
-    bottom: bottom,
-    // right: flag == 0 ? right != 0.0 ? right : null : null,
-    //left: flag == 1 ? right != 0.0 ? right : null : null,
+    bottom: bottom + 15,
     child: new Card(
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -27,8 +24,7 @@ Positioned cardDemoDummy(
         width: screenSize.width / 1.05,
         height: screenSize.height / 1.6,
         decoration: new BoxDecoration(
-          // color: new Color.fromRGBO(121, 114, 173, 1.0),
-          color: Colors.deepPurple[400],
+          color: Colors.grey[100],
           borderRadius: new BorderRadius.circular(10.0),
         ),
         child: new Column(
@@ -44,25 +40,26 @@ Positioned cardDemoDummy(
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 35, top: 10, bottom: 10),
+              padding: EdgeInsets.only(left: (screenSize.width / 1.05) * 0.05, right: (screenSize.width / 1.05) * 0.05, top: 10, bottom: 10),
               width: screenSize.width / 1.05,
               alignment: Alignment.centerLeft,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
-                  Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
-                  Text(user.institution, style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text(user.department, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+                  Text(user.institution, style: TextStyle(color: Colors.black, fontSize: 16),),
+                  Text(user.department, style: TextStyle(color: Colors.black, fontSize: 16),),
                 ]
               )
             ),
             new Container(
+                padding: EdgeInsets.symmetric(horizontal: (screenSize.width / 1.05) * 0.05),
                 width: screenSize.width / 1.05,
                 height: screenSize.height / 1.6 - screenSize.height / 1.7,
                 alignment: Alignment.center,
                 child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     new FlatButton(
                         padding: new EdgeInsets.all(0.0),
@@ -88,7 +85,7 @@ Positioned cardDemoDummy(
                           width: 130.0,
                           alignment: Alignment.center,
                           decoration: new BoxDecoration(
-                            color: Colors.greenAccent[700],
+                            color: Colors.deepPurple,
                             borderRadius: new BorderRadius.circular(60.0),
                           ),
                           child: new Text(

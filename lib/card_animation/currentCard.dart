@@ -6,7 +6,6 @@ import 'package:impact/models/user.dart';
 
 Positioned cardDemo(
     User user,
-    // DecorationImage img,
     double bottom,
     double right,
     double left,
@@ -20,36 +19,24 @@ Positioned cardDemo(
     Function swipeRight,
     Function swipeLeft) {
   Size screenSize = MediaQuery.of(context).size;
-  // print("Card");
   return Positioned(
-    bottom: bottom - 5,
+    bottom: bottom + 10,
     right: flag == 0 ? right != 0.0 ? right : null : null,
     left: flag == 1 ? right != 0.0 ? right : null : null,
     child: Dismissible(
       key: Key(Random().toString()),
       crossAxisEndOffset: -0.3,
       onResize: () {
-        //print("here");
-        // setState(() {
-        //   var i = data.removeLast();
-
-        //   data.insert(0, i);
-        // });
       },
       onDismissed: (DismissDirection direction) {
-//          _swipeAnimation();
         if (direction == DismissDirection.endToStart)
-          // dismissImg(img);
           dismissImg(user);
         else
-          // addImg(img);
           addImg(user);
       },
       child: Transform(
         alignment: flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
-        //transform: null,
         transform: Matrix4.skewX(skew),
-        //..rotateX(-math.pi / rotation),
         child: RotationTransition(
           turns: AlwaysStoppedAnimation(
               flag == 0 ? rotation / 360 : -rotation / 360),
@@ -57,12 +44,7 @@ Positioned cardDemo(
             tag: "Mentor",
             child: GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //     context,
-                //     new MaterialPageRoute(
-                //         builder: (context) => new DetailPage(type: img)));
                 Navigator.of(context).push(new PageRouteBuilder(
-                  // pageBuilder: (_, __, ___) => new DetailPage(type: img),
                   pageBuilder: (_, __, ___) => new DetailPage(user: user),
                 ));
               },
@@ -75,8 +57,7 @@ Positioned cardDemo(
                   width: screenSize.width / 1.05,
                   height: screenSize.height / 1.6,
                   decoration: BoxDecoration(
-                    // color: Color.fromRGBO(121, 114, 173, 1.0),
-                    color: Colors.deepPurple[400],
+                    color: Colors.grey[100],
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   child: new Column(
@@ -88,31 +69,31 @@ Positioned cardDemo(
                           borderRadius: new BorderRadius.only(
                               topLeft: new Radius.circular(10.0),
                               topRight: new Radius.circular(10.0)),
-                          // image: img,
                           image: DecorationImage(image: NetworkImage(user.avatarURL), fit: BoxFit.cover),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 35, top: 10, bottom: 10),
+                        padding: EdgeInsets.only(left: (screenSize.width / 1.05) * 0.05, right: (screenSize.width / 1.05) * 0.05, top: 10, bottom: 10),
                         width: screenSize.width / 1.05,
                         alignment: Alignment.centerLeft,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget> [
-                            Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
-                            Text(user.institution, style: TextStyle(color: Colors.white, fontSize: 16),),
-                            Text(user.department, style: TextStyle(color: Colors.white, fontSize: 16),),
+                            Text("${user.firstName} ${user.lastName}", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+                            Text(user.institution, style: TextStyle(color: Colors.black, fontSize: 16),),
+                            Text(user.department, style: TextStyle(color: Colors.black, fontSize: 16),),
                           ]
                         )
                       ),
                       new Container(
+                          padding: EdgeInsets.symmetric(horizontal: (screenSize.width / 1.05) * 0.05),
                           width: screenSize.width / 1.05,
                           height:
                           screenSize.height / 1.6 - screenSize.height / 1.7,
                           alignment: Alignment.center,
                           child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               new FlatButton(
                                   padding: new EdgeInsets.all(0.0),
@@ -143,7 +124,7 @@ Positioned cardDemo(
                                     width: 130.0,
                                     alignment: Alignment.center,
                                     decoration: new BoxDecoration(
-                                      color: Colors.greenAccent[700],
+                                      color: Colors.deepPurple,
                                       borderRadius:
                                       new BorderRadius.circular(60.0),
                                     ),

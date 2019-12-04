@@ -22,7 +22,6 @@ class _IntroScreenState extends State<IntroScreen> {
   bool newSignUp = false;
 
   void onDonePress() {
-    // TODO: go to next screen
     this.newSignUp = true;
     Navigator.of(context).pushReplacement(FadePageRoute(
       builder: (context) => (newSignUp) ? ProfileEdit() : RootPage(),
@@ -80,16 +79,6 @@ class _IntroScreenState extends State<IntroScreen> {
         backgroundColor: Colors.deepPurple,
       ),
     );
-
-
-    /*
-    new DotsIndicator(
-      decorator: DotsDecorator(
-        color: Colors.white,
-        activeColor: Colors.black38
-      ),
-    );
-    */
   }
 
 
@@ -97,13 +86,6 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return new IntroSlider(
       slides: this.slides,
-
-      /*
-      onDonePress: this.onDonePress,
-      colorDoneBtn: Colors.deepOrangeAccent,
-      onSkipPress: this.onDonePress,
-      colorSkipBtn: Colors.deepOrangeAccent,
-      */
 
       // Skip button
       renderSkipBtn: this.renderSkipBtn(),

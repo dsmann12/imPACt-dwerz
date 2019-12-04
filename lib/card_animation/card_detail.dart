@@ -5,10 +5,8 @@ import 'package:impact/models/user.dart';
 
 class DetailPage extends StatefulWidget {
   final User user;
-  // final DecorationImage type;
   const DetailPage({Key key, this.user}) : super(key: key);
   @override
-  // _DetailPageState createState() => new _DetailPageState(type: type);
   _DetailPageState createState() => new _DetailPageState(user: user);
 }
 
@@ -19,8 +17,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   Animation<double> width;
   Animation<double> height;
   User user;
-  // DecorationImage type;
-  // _DetailPageState({this.type});
   _DetailPageState({this.user});
   List data = imageData;
   double _appBarHeight = 256.0;
@@ -65,8 +61,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     timeDilation = 0.7;
-    // int img = data.indexOf(type);
-    //print("detail");
     return new Theme(
       data: new ThemeData(
         brightness: Brightness.light,
@@ -122,7 +116,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                 width: width.value,
                                 height: _appBarHeight,
                                 decoration: new BoxDecoration(
-                                  // image: data[img],
                                   image: DecorationImage(image: NetworkImage(user.avatarURL),fit: BoxFit.cover),
                                 ),
                               ),
@@ -139,47 +132,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                               child: new Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-//                                  new Container(
-//                                    padding: new EdgeInsets.only(bottom: 20.0),
-//                                    alignment: Alignment.center,
-//                                    decoration: new BoxDecoration(
-//                                        color: Colors.white,
-//                                        border: new Border(
-//                                            bottom: new BorderSide(
-//                                                color: Colors.black12))),
-//                                    child: new Row(
-//                                      mainAxisAlignment:
-//                                      MainAxisAlignment.spaceBetween,
-//                                      children: <Widget>[
-//                                        new Row(
-//                                          children: <Widget>[
-//                                            new Icon(
-//                                              Icons.access_time,
-//                                              color: Colors.cyan,
-//                                            ),
-//                                            new Padding(
-//                                              padding:
-//                                              const EdgeInsets.all(8.0),
-//                                              child: new Text("10:00  AM"),
-//                                            )
-//                                          ],
-//                                        ),
-//                                        new Row(
-//                                          children: <Widget>[
-//                                            new Icon(
-//                                              Icons.map,
-//                                              color: Colors.cyan,
-//                                            ),
-//                                            new Padding(
-//                                              padding:
-//                                              const EdgeInsets.all(8.0),
-//                                              child: new Text("15 MILES"),
-//                                            )
-//                                          ],
-//                                        ),
-//                                      ],
-//                                    ),
-//                                  ),
                                   new Padding(
                                     padding: const EdgeInsets.only(
                                         top: 16.0, bottom: 8.0),
@@ -190,55 +142,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   new Text(user.description),
-//                                  new Container(
-//                                    margin: new EdgeInsets.only(top: 25.0),
-//                                    padding: new EdgeInsets.only(
-//                                        top: 5.0, bottom: 10.0),
-//                                    height: 120.0,
-//                                    decoration: new BoxDecoration(
-//                                        color: Colors.white,
-//                                        border: new Border(
-//                                            top: new BorderSide(
-//                                                color: Colors.black12))),
-//                                    child: new Column(
-//                                      mainAxisAlignment:
-//                                      MainAxisAlignment.spaceEvenly,
-//                                      crossAxisAlignment:
-//                                      CrossAxisAlignment.start,
-//                                      children: <Widget>[
-//                                        new Text(
-//                                          "ATTENDEES",
-//                                          style: new TextStyle(
-//                                              fontWeight: FontWeight.bold),
-//                                        ),
-//                                        new Row(
-//                                          mainAxisAlignment:
-//                                          MainAxisAlignment.spaceAround,
-//                                          crossAxisAlignment:
-//                                          CrossAxisAlignment.start,
-////                                          children: <Widget>[
-////                                            new CircleAvatar(
-////                                                backgroundImage: avatar1),
-////                                            new CircleAvatar(
-////                                              backgroundImage: avatar2,
-////                                            ),
-////                                            new CircleAvatar(
-////                                              backgroundImage: avatar3,
-////                                            ),
-////                                            new CircleAvatar(
-////                                              backgroundImage: avatar4,
-////                                            ),
-////                                            new CircleAvatar(
-////                                              backgroundImage: avatar5,
-////                                            ),
-////                                            new CircleAvatar(
-////                                              backgroundImage: avatar6,
-////                                            )
-////                                          ],
-//                                        )
-//                                      ],
-//                                    ),
-//                                  ),
                                   new Container(
                                     height: 100.0,
                                   )

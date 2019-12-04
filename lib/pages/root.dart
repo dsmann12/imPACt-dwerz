@@ -4,7 +4,6 @@ import 'package:impact/pages/home.dart';
 import 'package:impact/pages/profile.dart';
 import 'package:impact/pages/contacts.dart';
 import 'package:impact/pages/connect.dart';
-import 'package:impact/pages/chat.dart';
 import 'package:impact/pages/messages.dart';
 
 class RootPage extends StatefulWidget
@@ -19,11 +18,6 @@ class _RootPageState extends State<RootPage>
   int _selectedIndex = 2;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-//  final List<Widget> _screens = [
-//    Scaffold(backgroundColor: Colors.green),
-//    Scaffold(backgroundColor: Colors.red),
-//    Scaffold(backgroundColor: Colors.blue),
-//  ];
   int _currentIndex = 2;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(), //widget function call
@@ -31,13 +25,8 @@ class _RootPageState extends State<RootPage>
     Recommendations(),
     MentorList(), // widget function call
     PersonalProfile(),
-    
-//    SearchBar()
-//    Text(
-//      'Search for Mentors here',
-//      style: optionStyle,
-//    )
   ];
+
   //event on tapping on a tab
   void _onItemTapped(int index)
   {
@@ -81,7 +70,6 @@ class _RootPageState extends State<RootPage>
           currentIndex: _selectedIndex,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          // selectedItemColor: Colors.green[600],
           selectedItemColor: Colors.deepPurple,
           unselectedItemColor: Colors.black,
           type: BottomNavigationBarType.fixed,
@@ -91,7 +79,6 @@ class _RootPageState extends State<RootPage>
               _onItemTapped(index);
             }
           }
-        //onTap: _onItemTapped,
       ),
     );
   }
