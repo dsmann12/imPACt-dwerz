@@ -15,10 +15,11 @@ class IntroScreen extends StatefulWidget {
   }
 }
 
-
+// The Class _IntroScreenState extends State<IntroScreel>
 class _IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
+  // The new sign up is set to false.
   bool newSignUp = false;
 
   void onDonePress() {
@@ -28,6 +29,7 @@ class _IntroScreenState extends State<IntroScreen> {
     ));
   }
 
+  // Displays the the done button when user reaches last slide of the intro.
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
@@ -35,6 +37,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
+  // Displays the next button for the user to press when turning to the next slide.
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
@@ -43,6 +46,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
+  // Displays the skip button for the user to press to skip to the last slide of the intro page.
   Widget renderSkipBtn() {
     return Icon(
       Icons.skip_next,
@@ -50,11 +54,12 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
+  // Displays the slides for the intro
   @override
   void initState() {
     super.initState();
 
-
+    // Displays the first slide of the intro slides
     slides.add(
       new Slide(
         title: "WELCOME",
@@ -63,6 +68,8 @@ class _IntroScreenState extends State<IntroScreen> {
         backgroundColor: Colors.deepPurple,
       ),
     );
+
+    // Displays the second slide of the intro slides
     slides.add(
       new Slide(
         title: "ABOUT",
@@ -71,6 +78,8 @@ class _IntroScreenState extends State<IntroScreen> {
         backgroundColor: Colors.deepPurple,
       ),
     );
+
+    // Displays the third and final slide of the intro slides
     slides.add(
       new Slide(
         title: "GOOD LUCK",
@@ -81,7 +90,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-
+  // These are actually buttons for the white icons for the intro slides, but their colors match the background of them. 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
