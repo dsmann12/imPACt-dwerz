@@ -6,12 +6,15 @@ import 'package:impact/models/user.dart';
 import 'package:impact/pages/chat.dart';
 import 'package:intl/intl.dart';
 
+// The messages page holds a list of chats the user is involved with
+// user can click the chat to enter the chat page containing the chat's messages
 class MessagesPage extends StatefulWidget
 {
   @override
   _MessagesPageState createState() => _MessagesPageState();
 }
 
+// Handles the message page state
 class _MessagesPageState extends State<MessagesPage>
 {
   final format = DateFormat("MMMd");

@@ -3,10 +3,12 @@ import 'package:impact/models/user.dart';
 import 'dart:async';
 import 'package:impact/services/authentication.dart';
 
+// A service to assist in getting, updating, and creating users
+// All data is handled by firebase
 class UserService {
-
   final Duration timeout = const Duration(seconds: 30);
 
+  // add new users to firebase
   static Future<List<User>> addUsers(List<User> users) async {
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       users.forEach((user) async {
@@ -18,6 +20,7 @@ class UserService {
     return users;
   }
 
+  // add a new user to firebase
   static Future<User> addUser(User user) async {
     Map map = user.toMap();
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -27,6 +30,7 @@ class UserService {
     return User.fromSnapshot(await user.reference.get());
   }
 
+  // get user from firebase
   static Future<User> getUser(String id) async {
     QuerySnapshot snapshot = await Firestore.instance.collection('user').where("id", isEqualTo: id).getDocuments();
     List<DocumentSnapshot> documents = snapshot.documents;
@@ -35,6 +39,7 @@ class UserService {
     return user;
   }
 
+  // update user in firebase
   static Future<User> updateUser(User user) async {
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       await user.reference.updateData(user.toMap());
@@ -43,6 +48,7 @@ class UserService {
     return user;
   }
 
+  // get all users by ids
   static Future<List<User>> getUsers(List<String> ids) async {
     List<User> users;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -55,6 +61,7 @@ class UserService {
     return users;
   }
 
+  // get all users with the mentor role from the database
   static Future<List<User>> getMentors() async {
     List<User> mentors;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -69,6 +76,7 @@ class UserService {
     return mentors;
   }
 
+  // get all mentors for a specific user
   static Future<List<User>> getMentorsByUser(String id) async {
     List<User> mentors;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -84,6 +92,7 @@ class UserService {
     return mentors;
   }
 
+  // get all mentees for a specific user
   static Future<List<User>> getMenteesByUser(String id) async {
     List<User> mentees;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {

@@ -6,9 +6,12 @@ import 'package:impact/models/post.dart';
 import 'package:impact/services/post_service.dart';
 import 'dart:async';
 
+// A service to assist in getting, updating, and creating mentor requests between users
+// All data is handled by firebase
 class RequestService {
   final Duration timeout = const Duration(seconds: 30);
 
+  // submit a new mentor request based on a request object
   static Future<Request> submitRequest(Request request) async {
     Map map = request.toMap();
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -18,6 +21,7 @@ class RequestService {
     return Request.fromSnapshot(await request.reference.get());
   }
 
+  // accept a mentor request
   static Future<Request> acceptRequest(Request request) async {
     request.status = 1;
     request = await updateRequest(request);
@@ -38,18 +42,21 @@ class RequestService {
     return request;
   }
 
+  // deny a mentor request
   static Future<Request> denyRequest(Request request) async {
     request.status = 2;
     request = await updateRequest(request);
     return request;
   }
 
+  // delete a mentor request
   static Future<void> removeRequest(Request request) async {
     await Firestore.instance.runTransaction((Transaction tx,  {timeout}) async {
       await request.reference.delete();
     });    
   }
 
+  // update a mentor request
   static Future<Request> updateRequest(Request request) async {
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
       await request.reference.updateData(request.toMap());
@@ -58,6 +65,7 @@ class RequestService {
     return request;
   }
 
+  // get mentor requests sent to a user
   static Future<List<Request>> getRequestsByUser(String id) async {
     List<Request> requests;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
@@ -73,6 +81,7 @@ class RequestService {
     return requests;
   }
 
+  // get mentor requests sent by a user
   static Future<List<Request>> getSentRequestsByUser(String id) async {
     List<Request> requests;
     await Firestore.instance.runTransaction((Transaction tx, {timeout}) async {
