@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:impact/models/message.dart';
-import 'package:impact/services/messaging_service.dart';
 import 'package:impact/services/authentication.dart';
 import 'package:impact/models/user.dart';
-import 'package:impact/pages/chat.dart';
 import 'package:impact/models/request.dart';
 import 'package:impact/services/request_service.dart';
 
+// Requests page showing sent and received mentor requests depending on the current user's role
 class RequestsPage extends StatefulWidget
 {
   @override
   _RequestsPageState createState() => _RequestsPageState();
 }
 
+// Handles the state of the requests page
 class _RequestsPageState extends State<RequestsPage>
 {
   User user = AuthService.getCurrentUser();
@@ -35,6 +34,7 @@ class _RequestsPageState extends State<RequestsPage>
       return Center(child: CircularProgressIndicator(),);
     }
 
+    // if current user is a mentor, build the mentor view, else build the mentee view
     return (user.isMentor()) ? _buildMentorView() : _buildMenteeView();
   }
 

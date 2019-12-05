@@ -3,17 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact/models/user.dart';
 import 'package:impact/services/user_service.dart';
 
-enum AuthStatus {
-  NOT_DETERMINED,
-  NOT_LOGGED_IN,
-  LOGGED_IN,
-}
 
+// A service to assist in authenticating a user
+// Authentication is handled by firebase
+// Methods are wrappers around a firebase authentication library
 class AuthService {
+  // FirebaseAuth object that contains methods to authenticate with firebase
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // currentUser stores the authenticated user as a User object
   static User currentUser;
+  // boolean to determine if user is signing up with a new account
   static bool newSignUp = false;
 
+  // method for signing into firebase
+  // return null on success so FlutterLogin page will correctly load
+  // return error string on error
   static Future<String> signIn(String email, String password) async {
     try {
       AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
@@ -33,6 +37,9 @@ class AuthService {
     }
   }
 
+  // method for signing up a new account into firebase
+  // return null on success so FlutterLogin page will correctly load
+  // error string on error
   static Future<String> signUp(String email, String password) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -53,26 +60,19 @@ class AuthService {
     }
   }
 
+  // return a reference to the current user
   static User getCurrentUser() {
     return currentUser;
   }
 
+  // return current user as Firebase Use robject
   static Future<FirebaseUser> getFirebaseUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return user;
   }
 
+  // method to sign out of firebase
   static Future<void> signOut() async {
     return _firebaseAuth.signOut();
-  }
-
-  static Future<void> sendEmailVerification() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    user.sendEmailVerification();
-  }
-
-  static Future<bool> isEmailVerified() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    return user.isEmailVerified;
   }
 }

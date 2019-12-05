@@ -44,6 +44,7 @@ class BubbleEdges {
   String toString() => 'BubbleEdges($left, $top, $right, $bottom)';
 }
 
+// Handles the styling of the bubble, including color, where nip goes, etc.
 class BubbleStyle {
   const BubbleStyle({
     this.radius,
